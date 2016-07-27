@@ -41,7 +41,7 @@ Map.prototype.addCatch = function(pt) {
         var pkm = `${pt.name} (lvl ${pt.lvl})`;
         console.log("Catch " + pkm);
 
-        var icon = L.icon({ iconUrl: `./assets/icons/${pt.id}.png`, iconSize: [40, 40]});
+        var icon = L.icon({ iconUrl: `./assets/icons/${pt.id}.png`, iconSize: [45, 45]});
         L.marker([pos.lat, pos.lng], {icon: icon}).addTo(this.map).bindPopup(`${pt.name} (lvl ${pt.lvl})`);
     } else {
         // ?
