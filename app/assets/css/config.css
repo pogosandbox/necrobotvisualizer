@@ -59,6 +59,10 @@ select{
     width: 70%;
 }
 
+.config-form .field-common {
+    width: 70%;
+    font-size: 100%;    
+}
 .config-form .field-long {
     width: 100%;
 }

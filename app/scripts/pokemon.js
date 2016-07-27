@@ -3,22 +3,19 @@
 
     var allPokemon = null;
 
-    function load(local) {
-        local = local || "en";
-        var content = require(`../assets/json/pokemon.${local}.js`);
-        allPokemon = {
-            "en": content
-        }
+    function load(locale) {
+        locale = locale || "en";
+        var content = require(`../assets/json/pokemon.${locale}.js`);
+        allPokemon = content;
     }
 
-    module.exports.init = function() {
-        load("en");
+    module.exports.init = function(locale) {
+        load(locale);
     }
 
-    module.exports.getIdFromName = function(name) {
+    module.exports.getName = function(id) {
         if (!allPokemon) load("en");
-
-        return allPokemon['en'][name];
+        return allPokemon[id];
     }
 
 }());

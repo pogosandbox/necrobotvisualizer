@@ -14,24 +14,13 @@
     <script>if (window.module) module = window.module;</script>
 
     <script>
-        const { remote } = require("electron");
-        const dialog = remote.dialog;
         const config = require("./scripts/config");
         var appconfig = config.load();
 
-        function chooseDir() {
-            dialog.showOpenDialog({properties: ['openDirectory']}, (dir) => {
-                if (dir != undefined) {
-                   var folder = dir[0]; 
-                   $("#txtFolder").val(folder);
-                };
-            });
-        }
-
         function saveConfig() {
             appconfig.locale = $("#slLocale").val();
-            appconfig.necrofolder = $("#txtFolder").val();
-            console.log(appconfig);
+            appconfig.websocket = $("#txtWebSocket").val();
+
             config.save(appconfig);
             navigateAway();
         }
@@ -42,9 +31,8 @@
 
         $(function() {
             $("#slLocale").val(appconfig.locale);
-            $("#txtFolder").val(appconfig.necrofolder);
+            $("#txtWebSocket").val(appconfig.websocket);
 
-            $("#chooseBtn").click(chooseDir);
             $("#saveBtn").click(saveConfig);
             $("#cancelBtn").click(navigateAway);
         });
@@ -58,15 +46,14 @@
             <ul class="config-form">
                 <li>
                     <label>Locale</label>
-                    <select id="slLocale" name="locale" class="field-select">
+                    <select id="slLocale" name="locale" class="field-common">
                         <option value="en">English</option>
                         <option value="fr">Francais</option>
                     </select>
                 </li>
                 <li>
-                    <label>Necrobot Folder</label>
-                    <input type="text" id="txtFolder" class="field-folder" placeholder="NecroBot folder" />
-                    <input type="button" id="chooseBtn" value="Choose Folder"></input>
+                    <label>Necrobot Websocket</label>
+                    <input type="text" id="txtWebSocket" class="field-common" placeholder="https://localhost:[port]" />
                 </li>
                 <li>
                     <input id="saveBtn" type="button" value="Save" />
