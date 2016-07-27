@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto'), url(../fonts/Roboto-Regular.ttf) format('truetype');
+}
+
+body, html, .content {
+    font-family: Roboto;
+    background-color: black;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+  padding: 20px;
+  align-items: stretch;
+  flex: 1 100%;
+}
+
+#map {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 100%;
+}
+
+.settings {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
