@@ -6,6 +6,9 @@ if(require('electron-squirrel-startup')) return;
 
 const electron = require('electron')
 const app = electron.app
+
+app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+
 const BrowserWindow = electron.BrowserWindow
 
 let mainWindow

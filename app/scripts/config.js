@@ -7,7 +7,7 @@
 
     var defaultConfig = {
         locale: "en",
-        websocket: "ws://localhost:14251"
+        websocket: "wss://localhost:14251"
     };
 
     var load = function() {
