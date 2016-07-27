@@ -6,7 +6,8 @@
     var configfile = path.join(remote.app.getPath("userData"), "settings.json");
 
     var defaultConfig = {
-        locale: "en"
+        locale: "en",
+        websocket: "ws://localhost:14251"
     };
 
     var load = function() {
