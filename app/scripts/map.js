@@ -8,6 +8,7 @@ var Map = function(parentDiv) {
     this.steps = [];
     this.catches = [];
     this.pokestops = [];
+    this.availablePokestops = [];
 };
 
 Map.prototype.saveContext = function() {
@@ -26,10 +27,6 @@ Map.prototype.loadContext = function() {
             this.catches = JSON.parse(sessionStorage.getItem("catches")) || [];
             this.pokestops = JSON.parse(sessionStorage.getItem("pokestops")) || [];
 
-            console.log(this.steps);
-            console.log(this.catches);
-            console.log(this.pokestops);
-
             this.initPath();
 
             for (var i = 0; i < this.catches.length; i++) {
@@ -39,8 +36,8 @@ Map.prototype.loadContext = function() {
             }
             for (var i = 0; i < this.pokestop.length; i++) {
                 var pt = this.pokestop[i];
-                var icon = L.icon({ iconUrl: `./assets/img/stop.png`, iconSize: [30, 50]});
-                L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map);
+                var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
+                L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pt.name);
             }
         } catch(err) {}
     }
@@ -64,7 +61,7 @@ Map.prototype.initPath = function() {
 }
 
 Map.prototype.addToPath = function(pt) {
-    console.log(`Walk to (${pt.lat},${pt.lng})`);
+    //console.log(`Walk to (${pt.lat},${pt.lng})`);
 
     if (this.initPath()) {
         var latLng = L.latLng(pt.lat, pt.lng);
@@ -95,7 +92,7 @@ Map.prototype.addCatch = function(pt) {
     L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pkm);
 }
 
-Map.prototype.addPokestop = function(pt) {
+Map.prototype.addVisitedPokestop = function(pt) {
     if (!pt.lat) return;
 
     console.log("Pokestop.");
@@ -103,6 +100,22 @@ Map.prototype.addPokestop = function(pt) {
     this.addToPath(pt);
     this.pokestops.push(pt);
 
-    var icon = L.icon({ iconUrl: `./assets/img/stop.png`, iconSize: [30, 50]});
-    L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map);
+    var ps = this.availablePokestops.find(ps => ps.id == pt.id);
+    if (ps) {
+        console.log("found existing");
+        ps.marker.setIcon(L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]}));
+        ps.marker.bindPopup(pt.name);
+    } else {
+        var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
+        L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pt.name);
+    }
+}
+
+Map.prototype.addPokestops = function(forts) {
+    this.availablePokestops = forts;
+    for(var i = 0; i < forts.length; i++) {
+        var pt = forts[i];
+        var icon = L.icon({ iconUrl: `./assets/img/pokestop_available.png`, iconSize: [30, 50]});
+        pt.marker = L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map);
+    }
 }

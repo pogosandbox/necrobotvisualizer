@@ -1,4 +1,7 @@
 (function() {
+    const { version } = require("./package.json");
+    document.title += " - " + version;
+
     var global = { };
     window.global = global;
 
@@ -35,12 +38,24 @@
                     });
                 }
             } else if (msg.$type == necroSocket.MsgTypes.FortUsed) {
+                console.log(msg);
                 if (msg.Latitude && msg.Longitude) {
-                    global.map.addPokestop({
+                    global.map.addVisitedPokestop({
+                        id: msg.Id,
+                        name: msg.Name,
                         lat: msg.Latitude,
                         lng: msg.Longitude
                     });
                 }
+            } else if (msg.$type == necroSocket.MsgTypes.PokestopList) {
+                var forts = Array.from(msg.Forts.$values.filter(f => f.Type == 1), f => {
+                    return {
+                        id: f.Id,
+                        lat: f.Latitude,
+                        lng: f.Longitude
+                    }
+                });
+                global.map.addPokestops(forts);
             } else {
                 //console.log(msg);
             }
