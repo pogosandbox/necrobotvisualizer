@@ -46,11 +46,17 @@
             }
         };
     }
-    
+
     $(function() {
+        $("#settingsLink").click(() => {
+            global.map.saveContext();
+            window.location = "config.html";
+        })
+
         if (global.config.websocket) {
             // settings ok, let's go
             global.map = new Map("map");
+            global.map.loadContext();
             listenToWebSocket();
         } else {
             // no settings, first time run?
