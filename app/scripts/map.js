@@ -50,7 +50,7 @@ Map.prototype.addCatch = function(pt) {
 
 Map.prototype.addPokestop = function(pt) {
     this.addToPath(pt);
-
+    console.log("Pokestop.");
     var icon = L.icon({ iconUrl: `./assets/img/stop.png`, iconSize: [30, 50]});
     L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map);
 }

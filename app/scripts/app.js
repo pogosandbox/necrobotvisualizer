@@ -16,6 +16,7 @@
         ws.onopen = () => { console.log("Connected to Bot"); };
         ws.onmessage = function (evt) {
             var msg = JSON.parse(evt.data);
+            //console.log(msg);
             if (msg.$type == necroSocket.MsgTypes.Position) {
                 var lat = msg.Latitude;
                 var lng = msg.Longitude;
@@ -25,11 +26,14 @@
                     lng: lng 
                 });
             } else if (msg.$type == necroSocket.MsgTypes.Capture) {
-                global.map.addCatch({
-                    id: msg.Id,
-                    name: pokemon.getName(msg.Id),
-                    lvl: msg.Level
-                });
+                // 1 == CatchSuccess
+                if (msg.Status = 1) {
+                    global.map.addCatch({
+                        id: msg.Id,
+                        name: pokemon.getName(msg.Id),
+                        lvl: msg.Level
+                    });
+                }
             } else if (msg.$type == necroSocket.MsgTypes.FortUsed) {
                 if (msg.Latitude && msg.Longitude) {
                     global.map.addPokestop({
