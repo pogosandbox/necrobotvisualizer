@@ -7,6 +7,12 @@ In the Visualizer, the url on the config page should match the port you configur
 
 Go to the release tab, grab the latest and just launch it.
 
+## Config
+
+Click on the small icon on the top right of the app.  
+The important thing is websocket url and port. Default is also bot default so it should just work.  
+You can also choose local for Pokemon name display.
+
 ## Run from Code
 
 npm i && npm start
