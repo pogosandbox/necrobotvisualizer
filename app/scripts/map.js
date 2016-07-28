@@ -112,10 +112,13 @@ Map.prototype.addVisitedPokestop = function(pt) {
 }
 
 Map.prototype.addPokestops = function(forts) {
-    this.availablePokestops = forts;
     for(var i = 0; i < forts.length; i++) {
         var pt = forts[i];
-        var icon = L.icon({ iconUrl: `./assets/img/pokestop_available.png`, iconSize: [30, 50]});
-        pt.marker = L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map);
+        var ps = this.availablePokestops.find(ps => ps.id == pt.id);
+        if (!ps) {
+            var icon = L.icon({ iconUrl: `./assets/img/pokestop_available.png`, iconSize: [30, 50]});
+            pt.marker = L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map);
+            this.availablePokestops.push(pt);
+        }
     }
 }
