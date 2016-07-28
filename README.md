@@ -11,3 +11,6 @@ Go to the release tab, grab the latest and just launch it.
 
 npm i && npm start
 
+## Example
+
+![Screenshot](https://github.com/nicoschmitt/necrobotvisualizer/blob/master/screenshot.jpg?raw=true)
