@@ -48,6 +48,7 @@ Map.prototype.initPath = function() {
     if (this.steps.length < 2) return false;
 
     console.log("Init path and markers.");
+    $(".loading").hide();
 
     this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
 
@@ -55,18 +56,16 @@ Map.prototype.initPath = function() {
     this.path = L.polyline(pts, { color: 'red' }).addTo(this.map);
 
     var last = this.steps.pop();
-    this.me = L.marker([last.lat, last.lng]).addTo(this.map);
+    this.me = L.marker([last.lat, last.lng]).addTo(this.map).bindPopup(`${last.lat},${last.lng}`);
 
     return true;
 }
 
 Map.prototype.addToPath = function(pt) {
-    //console.log(`Walk to (${pt.lat},${pt.lng})`);
-
     if (this.initPath()) {
         var latLng = L.latLng(pt.lat, pt.lng);
         this.path.addLatLng(latLng);
-        this.me.setLatLng(L.latLng(pt.lat, pt.lng));
+        this.me.setLatLng(L.latLng(pt.lat, pt.lng)).getPopup().setContent(`${pt.lat},${pt.lng}`)
     }
     this.steps.push(pt);
 }
@@ -88,7 +87,7 @@ Map.prototype.addCatch = function(pt) {
 
     this.catches.push(pt);
 
-    var icon = L.icon({ iconUrl: `./assets/icons/${pt.id}.png`, iconSize: [45, 45]});
+    var icon = L.icon({ iconUrl: `./assets/icons/${pt.id}.png`, iconSize: [40, 40]});
     L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pkm);
 }
 
@@ -102,7 +101,6 @@ Map.prototype.addVisitedPokestop = function(pt) {
 
     var ps = this.availablePokestops.find(ps => ps.id == pt.id);
     if (ps) {
-        console.log("found existing");
         ps.marker.setIcon(L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]}));
         ps.marker.bindPopup(pt.name);
     } else {
@@ -121,4 +119,23 @@ Map.prototype.addPokestops = function(forts) {
             this.availablePokestops.push(pt);
         }
     }
+}
+
+Map.prototype.displayPokemonList = function(all) {
+    console.log("Pokemon list");
+    var div = $(".inventory .data")
+    div.html("");
+    all.forEach(function(element) {
+        var name = element.realname.toLowerCase();
+        name = name.replace("♀", "-f");
+        name = name.replace("♂", "-m");
+        div.append(`
+            <div class="pokemon">
+                <span>CP: ${element.cp}</span>
+                <span class="imgspan"><img src="./assets/icons/${element.id}.png" /></span>
+                <span>${element.name}</span>
+            </div>
+        `);
+    });
+    $(".inventory").show();
 }

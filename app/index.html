@@ -16,14 +16,27 @@
 
     <script src="scripts/map.js"></script>
     <script src="scripts/app.js"></script>
+    <script src="scripts/checkversion.js"></script>
   </head>
   
   <body>
     <div class="content">
       <div id="map"></div>
     </div>
-    <div class="settings">
-      <a href="#" id="settingsLink"><img width="15" src="./assets/img/settings.png" /></a>
+    <div class="toolbar">
+      <a href="#" id="pokemonLink"><img width="20" src="./assets/img/pokeball.png" /></a>
+      <a href="#" id="settingsLink"><img width="20" src="./assets/img/settings.png" /></a>
+    </div>
+    <div class="loading">
+      Waiting to get GPS coordinates from Bot...
+    </div>
+    <div class="message" style="display:none">
+      <div class="close"><a href="#"><img src="./assets/img/close.png" /></a></div>
+      <div class="data"></div>
+    </div>
+    <div class="inventory" style="display:none">
+      <div class="close"><a href="#"><img src="./assets/img/close.png" /></a></div>
+      <div class="data"></div>
     </div>
   </body>
 

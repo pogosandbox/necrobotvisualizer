@@ -15,7 +15,7 @@ body, html, .content {
 }
 
 .content {
-  padding: 20px;
+  padding: 0px;
   align-items: stretch;
   flex: 1 100%;
 }
@@ -27,8 +27,105 @@ body, html, .content {
   flex: 1 100%;
 }
 
-.settings {
+.toolbar {
+  background-color: #DDDDDD;
+  padding: 10px 0px;
   position: absolute;
-  right: 5px;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  flex-direction: row;
+  z-index: 1000;
+}
+
+.toolbar a {
+  padding: 0px 5px;
+}
+
+.loading {
+  background-color: black;
+  color: #eee;
+  width: 300px;
+  height: 50px;
+  margin-left: -170px;
+  margin-top: -70px;
+  position: absolute;
+  padding: 40px;
+  left: 50%;
+  top: 50%;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.message {
+  background-color: #eee;
+  color: black;
+  width: 300px;
+  height: 50px;
+  margin-left: -170px;
+  margin-top: -70px;
+  position: absolute;
+  padding: 40px;
+  left: 50%;
+  top: 50%;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 10px;
+  border: 2 solid black;
+  z-index: 2000;
+}
+
+.inventory {
+  background-color: #DDDDDD;
+  color: black;
+  width: 500px;
+  height: 60%;;
+  position: absolute;
+  padding: 20px 0px 20px 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.inventory .data {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  overflow: auto;
+  box-sizing: border-box;
+  align-content: center;
+}
+
+.pokemon {
+  width: 80px;
+  height: 100px;
+  padding: 5px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.pokemon .imgspan {
+  flex-grow: 1; 
+  display: flex;
+}
+
+.pokemon img {
+  max-width: 55px;
+  max-height: 55px;
+  margin: auto;
+}
+
+.close {
+  position: absolute;
   top: 5px;
+  right: 5px;
 }
