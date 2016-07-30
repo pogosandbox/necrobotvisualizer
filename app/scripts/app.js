@@ -10,15 +10,12 @@
     global.config = config.load();
 
     $(function() {
-        $("#pokemonLink").click(() => {
-            global.ws.send("PokemonList");
-        });
+        $("#pokemonLink").click(() => { global.ws.send("PokemonList"); });
+        $("#eggsLink").click(() => { global.ws.send("EggsList"); });
+        $("#inventoryLink").click(() => { global.ws.send("InventoryList"); });
+
         $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
         $("#sortByIv").click(() => global.map.displayPokemonList(null, "iv"));
-
-        $("#eggsLink").click(() => {
-            global.ws.send("EggsList");
-        });
 
         $(".close").click(function() {
             $(this).parent().hide();

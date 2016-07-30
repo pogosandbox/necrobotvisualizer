@@ -1,8 +1,7 @@
-
+var inventory = require("./scripts/inventory");
 
 function listenToWebSocket() {
-    var pokemon = require("./scripts/pokemon");
-    pokemon.init(global.config.locale);
+    inventory.init(global.config.locale);
 
     ws = new WebSocket(global.config.websocket);
     global.ws = ws;
@@ -23,7 +22,7 @@ function listenToWebSocket() {
             if (msg.Status = 1) {
                 var pkm = {
                     id: msg.Id,
-                    name: pokemon.getName(msg.Id),
+                    name: inventory.getPokemonName(msg.Id),
                     lvl: msg.Level
                 };
                 if (!global.snipping) {
@@ -58,22 +57,13 @@ function listenToWebSocket() {
             if (msg.Active) console.log("Sniper Mode");
             global.snipping = msg.Active;
         } else if (msg.$type.indexOf("PokemonListEvent") > 0) {
-            //console.log(msg);
             var pkm = Array.from(msg.PokemonList.$values, p => {
-                if (!p.Item1) {
-                    // temp stuff when version mismatch
-                    var tmp = p;
-                    p = {
-                        Item1: p,
-                        Item2: 0
-                    };
-                }
                 return {
                     id: p.Item1.PokemonId,
                     cp: p.Item1.Cp,
                     iv: p.Item2.toFixed(1),
-                    name: p.Item1.Nickname || pokemon.getName(p.Item1.PokemonId),
-                    realname: pokemon.getName(p.Item1.PokemonId, "en")
+                    name: p.Item1.Nickname || inventory.getPokemonName(p.Item1.PokemonId),
+                    realname: inventory.getPokemonName(p.Item1.PokemonId, "en")
                 }
             });
             global.map.displayPokemonList(pkm);
@@ -93,6 +83,16 @@ function listenToWebSocket() {
                 }
             });
             global.map.displayEggsList(incubators.concat(eggs));
+        } else if (msg.$type.indexOf("InventoryListEvent") > 0) {
+            var items = Array.from(msg.Items.$values, item => {
+                return {
+                    name: inventory.getItemName(item.ItemId),
+                    itemId: item.ItemId,
+                    count: item.Count,
+                    unseen: item.Unseen
+                }
+            });
+            global.map.displayInventory(items);
         } else {
             console.log(msg);
         }

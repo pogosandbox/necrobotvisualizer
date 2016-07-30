@@ -184,3 +184,19 @@ Map.prototype.displayEggsList = function(eggs) {
     });
     $(".inventory").show();
 }
+
+Map.prototype.displayInventory = function(eggs) {
+    console.log("Inventory list");
+    var div = $(".inventory .data")
+    div.html("");
+    eggs.forEach(function(elt) {
+        div.append(`
+            <div class="eggs">
+                <span>x${elt.count}</span>
+                <span class="imgspan"><img src="./assets/inventory/${elt.itemId}.png" /></span>
+                <span class="info">${elt.name}</span>
+            </div>
+        `);
+    });
+    $(".inventory").show();
+}
