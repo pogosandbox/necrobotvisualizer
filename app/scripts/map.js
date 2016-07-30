@@ -48,8 +48,8 @@ Map.prototype.saveContext = function() {
 }
 
 Map.prototype.loadContext = function() {
-    if (sessionStorage.getItem("available")) {
-        try {
+    try {
+        if (sessionStorage.getItem("available")) {
             console.log("Load data from storage to restore session");
 
             this.steps = JSON.parse(sessionStorage.getItem("steps")) || [];
@@ -68,8 +68,8 @@ Map.prototype.loadContext = function() {
                 var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
                 L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pt.name);
             }
-        } catch(err) {}
-    }
+        }
+    } catch(err) {}
 }
 
 Map.prototype.initPath = function() {
@@ -126,8 +126,6 @@ Map.prototype.addCatch = function(pt) {
 Map.prototype.addVisitedPokestop = function(pt) {
     if (!pt.lat) return;
 
-    console.log("Pokestop.");
-
     this.addToPath(pt);
     this.pokestops.push(pt);
 
@@ -164,7 +162,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     this.pokemonList.forEach(function(elt) {
         div.append(`
             <div class="pokemon">
-                <span class="info">CP: ${elt.cp} | IV: ${elt.iv}</span>
+                <span class="info">CP: ${elt.cp} | IV: ${elt.iv}%</span>
                 <span class="imgspan"><img src="./assets/pokemon/${elt.id}.png" /></span>
                 <span>${elt.name}</span>
             </div>

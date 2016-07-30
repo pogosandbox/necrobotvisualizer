@@ -1,5 +1,5 @@
 (function() {
-    var global = { };
+    var global = { snipping: false };
     window.global = global;
 
     const { version } = require("./package.json");
@@ -20,20 +20,28 @@
         ws.onmessage = function (evt) {
             var msg = JSON.parse(evt.data);
             if (msg.$type.indexOf("UpdatePositionEvent") > 0) {
-                global.map.addToPath({ 
-                    lat: msg.Latitude, 
-                    lng: msg.Longitude 
-                });
+                if (!global.snipping) {
+                    global.map.addToPath({ 
+                        lat: msg.Latitude, 
+                        lng: msg.Longitude 
+                    });
+                }
             } else if (msg.$type.indexOf("PokemonCaptureEvent") > 0) {
                 //console.log(msg);
                 // 1 == CatchSuccess
                 if (msg.Status = 1) {
-                    global.map.addCatch({
+                    var pkm = {
                         id: msg.Id,
                         name: pokemon.getName(msg.Id),
                         lvl: msg.Level
-                    });
+                    };
+                    if (!global.snipping) {
+                        global.map.addCatch(pkm);
+                    }
+                    pokemonToast(pkm, { snipe: global.snipping });
                 }
+            } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
+                // nothing
             } else if (msg.$type.indexOf("FortTargetEvent") > 0) {
                 // nothing
             } else if (msg.$type.indexOf("FortUsedEvent") > 0) {
@@ -55,6 +63,9 @@
                     }
                 });
                 global.map.addPokestops(forts);
+            } else if (msg.$type.indexOf("SnipeModeEvent") > 0) {
+                if (msg.Active) console.log("Sniper Mode");
+                global.snipping = msg.Active;
             } else if (msg.$type.indexOf("PokemonListEvent") > 0) {
                 //console.log(msg);
                 var pkm = Array.from(msg.PokemonList.$values, p => {
@@ -63,13 +74,13 @@
                         var tmp = p;
                         p = {
                             Item1: p,
-                            Item2: p.Cp
+                            Item2: 0
                         };
                     }
                     return {
                         id: p.Item1.PokemonId,
                         cp: p.Item1.Cp,
-                        iv: p.Item2.toFixed(0),
+                        iv: p.Item2.toFixed(1),
                         name: p.Item1.Nickname || pokemon.getName(p.Item1.PokemonId),
                         realname: pokemon.getName(p.Item1.PokemonId, "en")
                     }
@@ -129,4 +140,15 @@
         }
     });
 
+    function pokemonToast(pkm, snipe) {
+        var title = snipe ? "Snipe success" : "Catch success";
+        var toast = snipe ? toastr.success : toastr.info;
+        var content = `<div>${pkm.name} (lvl ${pkm.lvl})</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
+        toast(content, title, {
+            "progressBar": true,
+            "positionClass": "toast-bottom-left",
+            "timeOut": "5000",
+            closeButton: true
+        })
+    }
 }());

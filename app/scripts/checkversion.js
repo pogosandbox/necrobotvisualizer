@@ -17,16 +17,22 @@ $(function() {
     }
 
     function check() {
-        var api = "https://api.github.com/repos/nicoschmitt/necrobotvisualizer/releases";
-        $.getJSON(api, (data) => {
-            var ver = data[0].name;
-            var url = data[0].url;
-            if (cmpVersions(ver, global.version) > 0) {
-                console.log("New version available: " + ver);
-                $(".message .data").html(`New version available. Check on GitHub</a> to download it. <a href='${url}'>Here</a>`);
-                $(".message").show();
-            }
-        });
+        try {
+            var api = "https://api.github.com/repos/nicoschmitt/necrobotvisualizer/releases";
+            $.getJSON(api, (data) => {
+                data = data.filter(r => !r.prerelease);
+                var ver = data[0].name;
+                var url = data[0].url;
+                console.log("Latest version: " + ver);
+                if (cmpVersions(ver, global.version) > 0) {
+                    console.log("New version available: " + ver);
+                    $(".message .data").html(`New version available. Check on GitHub</a> to download it. <a href='${url}'>Here</a>`);
+                    $(".message").show();
+                }
+            });
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     check();

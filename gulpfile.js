@@ -3,6 +3,7 @@ var del      = require('del');
 var uglify   = require("gulp-uglify");
 var rename   = require("gulp-rename");
 var concat   = require("gulp-concat");
+var cssnano  = require("gulp-cssnano");
 
 // Dev
 
@@ -24,6 +25,8 @@ gulp.task('lib-css', function() {
     return gulp.src([
                    
                 ])
+                .pipe(concat("lib.full.min.css"))
+                .pipe(cssnano())
                 .pipe(gulp.dest("app/lib"));
 });
 
