@@ -110,6 +110,27 @@ body, html, .content {
   box-sizing: border-box;
 }
 
+.eggs {
+  width: 120px;
+  height: 100px;
+  padding: 5px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.eggs .imgspan {
+  flex-grow: 1; 
+  display: flex;
+}
+
+.eggs img {
+  max-width: 65px;
+  max-height: 80px;
+  margin: auto;
+}
+
 .pokemon {
   width: 80px;
   height: 100px;
