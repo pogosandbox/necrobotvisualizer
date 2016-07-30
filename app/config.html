@@ -18,6 +18,11 @@
         var appconfig = config.load();
 
         function saveConfig() {
+            if (appconfig.websocket != $("#txtWebSocket").val()) {
+                // clean context if url is changed (change bot ?)
+                sessionStorage.setItem("available", false)
+            } 
+
             appconfig.locale = $("#slLocale").val();
             appconfig.websocket = $("#txtWebSocket").val();
             appconfig.followPlayer = $("#chkFllowPlayer").prop("checked") || false;
