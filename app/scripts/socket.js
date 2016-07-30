@@ -28,7 +28,7 @@ function listenToWebSocket() {
                 if (!global.snipping) {
                     global.map.addCatch(pkm);
                 }
-                pokemonToast(pkm, { snipe: global.snipping });
+                pokemonToast(pkm);
             }
         } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
             // nothing
@@ -99,9 +99,9 @@ function listenToWebSocket() {
     };
 }
 
-function pokemonToast(pkm, snipe) {
-    var title = snipe ? "Snipe success" : "Catch success";
-    var toast = snipe ? toastr.success : toastr.info;
+function pokemonToast(pkm) {
+    var title = global.snipping ? "Snipe success" : "Catch success";
+    var toast = global.snipping ? toastr.success : toastr.info;
     var content = `<div>${pkm.name} (lvl ${pkm.lvl})</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
     toast(content, title, {
         "progressBar": true,
