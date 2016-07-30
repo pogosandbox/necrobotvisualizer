@@ -2,6 +2,7 @@
 var Map = function(parentDiv) {
     var leafmap = L.map(parentDiv);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { }).addTo(leafmap);
+
     this.map = leafmap;
     this.path = null;
 
@@ -65,7 +66,10 @@ Map.prototype.addToPath = function(pt) {
     if (this.initPath()) {
         var latLng = L.latLng(pt.lat, pt.lng);
         this.path.addLatLng(latLng);
-        this.me.setLatLng(L.latLng(pt.lat, pt.lng)).getPopup().setContent(`${pt.lat},${pt.lng}`)
+        this.me.setLatLng(latLng).getPopup().setContent(`${pt.lat},${pt.lng}`);
+        if (global.config.followPlayer) {
+            this.map.panTo(latLng);
+        }
     }
     this.steps.push(pt);
 }

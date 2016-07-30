@@ -20,6 +20,7 @@
         function saveConfig() {
             appconfig.locale = $("#slLocale").val();
             appconfig.websocket = $("#txtWebSocket").val();
+            appconfig.followPlayer = $("#chkFllowPlayer").prop("checked") || false;
 
             config.save(appconfig);
             navigateAway();
@@ -32,6 +33,7 @@
         $(function() {
             $("#slLocale").val(appconfig.locale);
             $("#txtWebSocket").val(appconfig.websocket);
+            $("#chkFllowPlayer").prop('checked', appconfig.followPlayer || false);
 
             $("#saveBtn").click(saveConfig);
             $("#cancelBtn").click(navigateAway);
@@ -51,6 +53,10 @@
                         <option value="fr">Francais</option>
                         <option value="de">German</option>
                     </select>
+                </li>
+                <li>
+                    <label>Map options</label>
+                    <input type="checkbox" id="chkFllowPlayer" class="field-comon" /><span>Follow player on map</span>
                 </li>
                 <li>
                     <label>Necrobot Websocket</label>
