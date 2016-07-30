@@ -34,6 +34,8 @@
                         lvl: msg.Level
                     });
                 }
+            } else if (msg.$type.indexOf("FortTargetEvent") > 0) {
+                // nothing
             } else if (msg.$type.indexOf("FortUsedEvent") > 0) {
                 //console.log(msg);
                 if (msg.Latitude && msg.Longitude) {
@@ -73,6 +75,22 @@
                     }
                 });
                 global.map.displayPokemonList(pkm);
+            } else if (msg.$type.indexOf("EggsListEvent") > 0) {
+                var incubators = Array.from(msg.Incubators.$values, i => {
+                    return {
+                        type: i.ItemId == 901 ? "incubator-unlimited" : "incubator",
+                        doneDist: i.StartKmWalked,
+                        totalDist: i.TargetKmWalked
+                    }
+                });
+                var eggs = Array.from(msg.UnusedEggs.$values, i => {
+                    return {
+                        type: "egg",
+                        doneDist: i.EggKmWalkedStart,
+                        totalDist: i.EggKmWalkedTarget
+                    }
+                });
+                global.map.displayEggsList(incubators.concat(eggs));
             } else {
                 console.log(msg);
             }

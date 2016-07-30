@@ -59,7 +59,7 @@ Map.prototype.loadContext = function() {
 
             for (var i = 0; i < this.catches.length; i++) {
                 var pt = this.catches[i];
-                var icon = L.icon({ iconUrl: `./assets/icons/${pt.id}.png`, iconSize: [45, 45]});
+                var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [45, 45]});
                 L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(`${pt.name} (lvl ${pt.lvl})`);
             }
             for (var i = 0; i < this.pokestop.length; i++) {
@@ -118,7 +118,7 @@ Map.prototype.addCatch = function(pt) {
 
     this.catches.push(pt);
 
-    var icon = L.icon({ iconUrl: `./assets/icons/${pt.id}.png`, iconSize: [40, 40]});
+    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [40, 40]});
     L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.layerCatches).bindPopup(pkm);
 }
 
@@ -156,15 +156,27 @@ Map.prototype.displayPokemonList = function(all) {
     console.log("Pokemon list");
     var div = $(".inventory .data")
     div.html("");
-    all.forEach(function(element) {
-        var name = element.realname.toLowerCase();
-        name = name.replace("♀", "-f");
-        name = name.replace("♂", "-m");
+    all.forEach(function(elt) {
         div.append(`
             <div class="pokemon">
-                <span>CP: ${element.cp}</span>
-                <span class="imgspan"><img src="./assets/icons/${element.id}.png" /></span>
-                <span>${element.name}</span>
+                <span>CP: ${elt.cp} | IV: ${elt.iv}</span>
+                <span class="imgspan"><img src="./assets/pokemon/${elt.id}.png" /></span>
+                <span>${elt.name}</span>
+            </div>
+        `);
+    });
+    $(".inventory").show();
+}
+
+Map.prototype.displayEggsList = function(eggs) {
+    console.log("Eggs list");
+    var div = $(".inventory .data")
+    div.html("");
+    eggs.forEach(function(elt) {
+        div.append(`
+            <div class="eggs">
+                <span class="imgspan"><img src="./assets/inventory/${elt.type}.png" /></span>
+                <span>${elt.doneDist.toFixed(1)} / ${elt.totalDist.toFixed(1)} km</span>
             </div>
         `);
     });
