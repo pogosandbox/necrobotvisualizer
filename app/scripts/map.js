@@ -109,7 +109,7 @@ Map.prototype.addCatch = function(pt) {
             pt.lat = pos.lat;
             pt.lng = pos.lng;
         } else {
-            // no position to pin to, abord
+            // no position to pin to, abort
             return;
         }
     }
@@ -126,7 +126,8 @@ Map.prototype.addCatch = function(pt) {
 Map.prototype.addVisitedPokestop = function(pt) {
     if (!pt.lat) return;
 
-    this.addToPath(pt);
+    console.log("Pokestop visited.");
+
     this.pokestops.push(pt);
 
     var ps = this.availablePokestops.find(ps => ps.id == pt.id);
