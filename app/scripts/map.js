@@ -74,12 +74,11 @@ Map.prototype.loadContext = function() {
 
 Map.prototype.initPath = function() {
     if (this.path != null) return true;
-    if (this.steps.length < 2) return false;
-
-    console.log("Init path and markers.");
-    $(".loading").hide();
-
-    this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
+    if (this.steps.length == 1) {
+        this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
+        $(".loading").hide();
+        return false;
+    }
 
     var pts = Array.from(this.steps, pt => L.latLng(pt.lat, pt.lng));
     this.path = L.polyline(pts, { color: 'red' }).addTo(this.layerPath);
@@ -91,6 +90,7 @@ Map.prototype.initPath = function() {
 }
 
 Map.prototype.addToPath = function(pt) {
+    this.steps.push(pt);
     if (this.initPath()) {
         var latLng = L.latLng(pt.lat, pt.lng);
         this.path.addLatLng(latLng);
@@ -99,7 +99,6 @@ Map.prototype.addToPath = function(pt) {
             this.map.panTo(latLng);
         }
     }
-    this.steps.push(pt);
 }
 
 Map.prototype.addCatch = function(pt) {
