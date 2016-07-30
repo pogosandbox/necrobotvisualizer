@@ -37,6 +37,7 @@ var Map = function(parentDiv) {
     this.catches = [];
     this.pokestops = [];
     this.availablePokestops = [];
+    this.pokemonList = [];
 };
 
 Map.prototype.saveContext = function() {
@@ -152,19 +153,24 @@ Map.prototype.addPokestops = function(forts) {
     }
 }
 
-Map.prototype.displayPokemonList = function(all) {
+Map.prototype.displayPokemonList = function(all, sortBy) {
     console.log("Pokemon list");
-    var div = $(".inventory .data")
-    div.html("");
-    all.forEach(function(elt) {
+    this.pokemonList = all || this.pokemonList;
+    if (sortBy) {
+        this.pokemonList = this.pokemonList.sort((p1, p2) => p2[sortBy] - p1[sortBy]);
+    }
+    var div = $(".inventory .data");
+    div.html(``);
+    this.pokemonList.forEach(function(elt) {
         div.append(`
             <div class="pokemon">
-                <span>CP: ${elt.cp} | IV: ${elt.iv}</span>
+                <span class="info">CP: ${elt.cp} | IV: ${elt.iv}</span>
                 <span class="imgspan"><img src="./assets/pokemon/${elt.id}.png" /></span>
                 <span>${elt.name}</span>
             </div>
         `);
     });
+    $(".pokemonsort").show();
     $(".inventory").show();
 }
 

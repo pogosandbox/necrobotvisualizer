@@ -132,13 +132,17 @@ body, html, .content {
 }
 
 .pokemon {
-  width: 80px;
+  width: 120px;
   height: 100px;
   padding: 5px;
   margin: 10px;
   display: flex;
   flex-direction: column;
   align-content: center;
+}
+
+.pokemon .info {
+  font-size: 80%;
 }
 
 .pokemon .imgspan {

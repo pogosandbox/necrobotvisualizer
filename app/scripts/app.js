@@ -56,9 +56,8 @@
                 });
                 global.map.addPokestops(forts);
             } else if (msg.$type.indexOf("PokemonListEvent") > 0) {
-                //console.log(msg.PokemonList.$values);
                 var pkm = Array.from(msg.PokemonList.$values, p => {
-                    if (!p.Item2) {
+                    if (!p.Item1) {
                         // temp stuff when version mismatch
                         var tmp = p;
                         p = {
@@ -69,7 +68,7 @@
                     return {
                         id: p.Item1.PokemonId,
                         cp: p.Item1.Cp,
-                        Iv: p.Item2,
+                        iv: p.Item2.toFixed(0),
                         name: p.Item1.Nickname || pokemon.getName(p.Item1.PokemonId),
                         realname: pokemon.getName(p.Item1.PokemonId, "en")
                     }
@@ -101,6 +100,8 @@
         $("#pokemonLink").click(() => {
             global.ws.send("PokemonList");
         });
+        $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
+        $("#sortByIv").click(() => global.map.displayPokemonList(null, "iv"));
 
         $("#eggsLink").click(() => {
             global.ws.send("EggsList");
@@ -108,6 +109,7 @@
 
         $(".close").click(function() {
             $(this).parent().hide();
+            $(".inventory .sort").hide();
         });
 
         $("#settingsLink").click(() => {
