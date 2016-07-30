@@ -15,4 +15,4 @@ ga(function(tracker) {
 ga('set', 'checkProtocolTask', null);
 ga("set", "location", "http://necrovisualizer.nicontoso.eu");
 ga('send', 'pageview');
-ga("send", "appStarted", document.title);
+ga("send", "event", "version", document.title, document.title);
