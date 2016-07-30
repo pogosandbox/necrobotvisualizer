@@ -49,7 +49,7 @@ Map.prototype.saveContext = function() {
 
 Map.prototype.loadContext = function() {
     try {
-        if (sessionStorage.getItem("available")) {
+        if (sessionStorage.getItem("available") == "true") {
             console.log("Load data from storage to restore session");
 
             this.steps = JSON.parse(sessionStorage.getItem("steps")) || [];

@@ -26,7 +26,8 @@
         });
 
         $("#recycleLink").click(() => {
-            
+            sessionStorage.setItem("available", false);
+            window.location.reload();
         });
 
         $("#settingsLink").click(() => {
