@@ -28,14 +28,22 @@ body, html, .content {
 }
 
 .toolbar {
-  background-color: #DDDDDD;
-  padding: 10px 0px;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 4px;
+  bottom: 15px;
+  right: 15px;
   position: absolute;
-  right: 10px;
-  top: 10px;
   display: flex;
   flex-direction: row;
   z-index: 1000;
+}
+.toolbar div {
+  padding: 7px;
+  border-right: 1px solid #ccc;
+}
+.toolbar div:hover {
+  background-color: #f4f4f4;
 }
 
 .toolbar a {

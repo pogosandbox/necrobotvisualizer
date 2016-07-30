@@ -1,9 +1,36 @@
 
 var Map = function(parentDiv) {
-    var leafmap = L.map(parentDiv);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { }).addTo(leafmap);
+    
+    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 
-    this.map = leafmap;
+    var osmCycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png');
+    var osmCycleTransport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png');    
+    var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png');
+    var watercolor = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg');
+
+    this.layerPokestops = new L.LayerGroup();
+    this.layerCatches = new L.LayerGroup();
+    this.layerPath = new L.LayerGroup();
+
+    this.map = L.map(parentDiv, {
+        layers: [osm, this.layerPath, this.layerCatches, this.layerPokestops]
+    });
+
+   var baseLayers = {
+        "OpenStreetMap": osm,
+        "OpenCycleMap": osmCycle,
+        "OpenCycleMap Transport": osmCycleTransport,
+        "Toner": toner,
+        "Watercolor": watercolor,
+    };
+    var overlays = {
+        "Path": this.layerPath,
+        "Pokestops": this.layerPokestops,
+        "Catches": this.layerCatches
+    };
+
+    L.control.layers(baseLayers, overlays).addTo(this.map);
+
     this.path = null;
 
     this.steps = [];
@@ -54,7 +81,7 @@ Map.prototype.initPath = function() {
     this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
 
     var pts = Array.from(this.steps, pt => L.latLng(pt.lat, pt.lng));
-    this.path = L.polyline(pts, { color: 'red' }).addTo(this.map);
+    this.path = L.polyline(pts, { color: 'red' }).addTo(this.layerPath);
 
     var last = this.steps.pop();
     this.me = L.marker([last.lat, last.lng]).addTo(this.map).bindPopup(`${last.lat},${last.lng}`);
@@ -92,7 +119,7 @@ Map.prototype.addCatch = function(pt) {
     this.catches.push(pt);
 
     var icon = L.icon({ iconUrl: `./assets/icons/${pt.id}.png`, iconSize: [40, 40]});
-    L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pkm);
+    L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.layerCatches).bindPopup(pkm);
 }
 
 Map.prototype.addVisitedPokestop = function(pt) {
@@ -109,7 +136,7 @@ Map.prototype.addVisitedPokestop = function(pt) {
         ps.marker.bindPopup(pt.name);
     } else {
         var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
-        L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pt.name);
+        L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(pt.name).addTo(this.layerPokestops);
     }
 }
 
@@ -119,7 +146,7 @@ Map.prototype.addPokestops = function(forts) {
         var ps = this.availablePokestops.find(ps => ps.id == pt.id);
         if (!ps) {
             var icon = L.icon({ iconUrl: `./assets/img/pokestop_available.png`, iconSize: [30, 50]});
-            pt.marker = L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map);
+            pt.marker = L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.layerPokestops);
             this.availablePokestops.push(pt);
         }
     }

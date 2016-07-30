@@ -30,4 +30,4 @@ gulp.task('lib-css', function() {
 
 // Main tasks
 
-gulp.task('default', [ "clean", "lib-js" ]);
+gulp.task('default', [ "clean", "lib-js", "lib-css" ]);

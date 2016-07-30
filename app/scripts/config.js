@@ -7,13 +7,15 @@
 
     var defaultConfig = {
         locale: "en",
-        websocket: "wss://localhost:14251"
+        websocket: "wss://localhost:14251",
+        followPlayer: false,
     };
 
     var load = function() {
         var config = defaultConfig;
         try {
             config = JSON.parse(fs.readFileSync(configfile, 'utf-8')); 
+            config = Object.assign({}, defaultConfig, config);
         } catch(err) {
             save(defaultConfig);
         }
