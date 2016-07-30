@@ -12,8 +12,6 @@
     var pokemon = require("./scripts/pokemon");
     pokemon.init(global.config.locale);
 
-    var necroSocket = require("./scripts/necro.websocket");
-
     function listenToWebSocket() {
         ws = new WebSocket(global.config.websocket);
         global.ws = ws;
@@ -21,13 +19,13 @@
         ws.onopen = () => { console.log("Connected to Bot"); };
         ws.onmessage = function (evt) {
             var msg = JSON.parse(evt.data);
-            if (msg.$type == necroSocket.MsgTypes.Position) {
+            if (msg.$type.indexOf("UpdatePositionEvent") > 0) {
                 global.map.addToPath({ 
                     lat: msg.Latitude, 
                     lng: msg.Longitude 
                 });
-            } else if (msg.$type == necroSocket.MsgTypes.Capture) {
-                console.log(msg);
+            } else if (msg.$type.indexOf("PokemonCaptureEvent") > 0) {
+                //console.log(msg);
                 // 1 == CatchSuccess
                 if (msg.Status = 1) {
                     global.map.addCatch({
@@ -36,7 +34,7 @@
                         lvl: msg.Level
                     });
                 }
-            } else if (msg.$type == necroSocket.MsgTypes.FortUsed) {
+            } else if (msg.$type.indexOf("FortUsedEvent") > 0) {
                 //console.log(msg);
                 if (msg.Latitude && msg.Longitude) {
                     global.map.addVisitedPokestop({
@@ -46,7 +44,7 @@
                         lng: msg.Longitude
                     });
                 }
-            } else if (msg.$type == necroSocket.MsgTypes.PokestopList) {
+            } else if (msg.$type.indexOf("PokeStopListEvent") > 0) {
                 var forts = Array.from(msg.Forts.$values.filter(f => f.Type == 1), f => {
                     return {
                         id: f.Id,
@@ -55,13 +53,23 @@
                     }
                 });
                 global.map.addPokestops(forts);
-            } else if (msg.$type == necroSocket.MsgTypes.PokemonList) {
+            } else if (msg.$type.indexOf("PokemonListEvent") > 0) {
+                //console.log(msg.PokemonList.$values);
                 var pkm = Array.from(msg.PokemonList.$values, p => {
+                    if (!p.Item2) {
+                        // temp stuff when version mismatch
+                        var tmp = p;
+                        p = {
+                            Item1: p,
+                            Item2: p.Cp
+                        };
+                    }
                     return {
-                        id: p.PokemonId,
-                        cp: p.Cp,
-                        name: p.Nickname || pokemon.getName(p.PokemonId),
-                        realname: pokemon.getName(p.PokemonId, "en")
+                        id: p.Item1.PokemonId,
+                        cp: p.Item1.Cp,
+                        Iv: p.Item2,
+                        name: p.Item1.Nickname || pokemon.getName(p.Item1.PokemonId),
+                        realname: pokemon.getName(p.Item1.PokemonId, "en")
                     }
                 });
                 global.map.displayPokemonList(pkm);
@@ -76,8 +84,8 @@
             global.ws.send("PokemonList");
         });
 
-        $("#eggLink").click(() => {
-            global.ws.send("EggList");
+        $("#eggsLink").click(() => {
+            global.ws.send("EggsList");
         });
 
         $(".close").click(function() {
