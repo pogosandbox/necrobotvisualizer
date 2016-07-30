@@ -56,6 +56,7 @@
                 });
                 global.map.addPokestops(forts);
             } else if (msg.$type.indexOf("PokemonListEvent") > 0) {
+                //console.log(msg);
                 var pkm = Array.from(msg.PokemonList.$values, p => {
                     if (!p.Item1) {
                         // temp stuff when version mismatch
