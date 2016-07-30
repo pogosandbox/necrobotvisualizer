@@ -100,7 +100,6 @@ body, html, .content {
   flex-direction: row;
   overflow: auto;
   box-sizing: border-box;
-  align-content: center;
 }
 
 .pokemon {
