@@ -1,6 +1,6 @@
 {
   "name": "necrobotvisualizer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "NecrobotVisualizer",
   "author": "Nicolas Schmitt",
   "main": "main.js",
