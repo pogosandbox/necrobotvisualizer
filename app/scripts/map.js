@@ -76,15 +76,13 @@ Map.prototype.initPath = function() {
     if (this.path != null) return true;
     if (this.steps.length == 1) {
         this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
+        this.me = L.marker([this.steps[0].lat, this.steps[0].lng]).addTo(this.map).bindPopup(`${this.steps[0].lat},${this.steps[0].lng}`);
         $(".loading").hide();
         return false;
     }
 
     var pts = Array.from(this.steps, pt => L.latLng(pt.lat, pt.lng));
     this.path = L.polyline(pts, { color: 'red' }).addTo(this.layerPath);
-
-    var last = this.steps.pop();
-    this.me = L.marker([last.lat, last.lng]).addTo(this.map).bindPopup(`${last.lat},${last.lng}`);
 
     return true;
 }
