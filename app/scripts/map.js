@@ -61,30 +61,33 @@ Map.prototype.loadContext = function() {
             for (var i = 0; i < this.catches.length; i++) {
                 var pt = this.catches[i];
                 var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [45, 45]});
-                L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(`${pt.name} (lvl ${pt.lvl})`);
+                L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(`${pt.name} (lvl ${pt.lvl})`).addTo(this.layerCatches);
             }
             for (var i = 0; i < this.pokestop.length; i++) {
                 var pt = this.pokestop[i];
                 var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
-                L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.map).bindPopup(pt.name);
+                L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(pt.name).addTo(this.layerPokestops);
             }
         }
     } catch(err) {}
 }
 
-Map.prototype.initPath = function() {
+Map.prototype.initPath = function(force) {
     if (this.path != null) return true;
-    if (this.steps.length == 1) {
+    
+    if (!this.me) {
         this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
         this.me = L.marker([this.steps[0].lat, this.steps[0].lng]).addTo(this.map).bindPopup(`${this.steps[0].lat},${this.steps[0].lng}`);
         $(".loading").hide();
-        return false;
     }
 
-    var pts = Array.from(this.steps, pt => L.latLng(pt.lat, pt.lng));
-    this.path = L.polyline(pts, { color: 'red' }).addTo(this.layerPath);
+    if (this.steps.length >= 2) {
+        var pts = Array.from(this.steps, pt => L.latLng(pt.lat, pt.lng));
+        this.path = L.polyline(pts, { color: 'red' }).addTo(this.layerPath);
+        return true;
+    }
 
-    return true;
+    return false;
 }
 
 Map.prototype.addToPath = function(pt) {
@@ -117,7 +120,7 @@ Map.prototype.addCatch = function(pt) {
     this.catches.push(pt);
 
     var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [40, 40]});
-    L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.layerCatches).bindPopup(pkm);
+    L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(pkm).addTo(this.layerCatches);
 }
 
 Map.prototype.addVisitedPokestop = function(pt) {

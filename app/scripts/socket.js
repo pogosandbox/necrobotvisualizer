@@ -64,6 +64,7 @@ function listenToWebSocket() {
             });
             global.map.displayPokemonList(pkm);
         } else if (msg.$type.indexOf("EggsListEvent") > 0) {
+            console.log(msg);
             var incubators = Array.from(msg.Incubators.$values, i => {
                 return {
                     type: i.ItemId == 901 ? "incubator-unlimited" : "incubator",
@@ -91,13 +92,12 @@ function listenToWebSocket() {
             global.map.displayInventory(items);
         } else if (msg.$type.indexOf("PokemonEvolveEvent") > 0) {
             // toast ?
+            console.log(msg);
             var pkm = {
                 id: msg.Id,
-                name: inventory.getPokemonName(id)
+                name: inventory.getPokemonName(msg.id),
+                lvl: "?"
             };
-            var id = msg.Id;
-            var name = inventory.getPokemonName(id);
-            console.log("Evolved: " + id + " - "+ name);
             pokemonToast(pkm, { title: "A Pokemon Evolved" });
         } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
             // nothing
@@ -121,7 +121,10 @@ function pokemonToast(pkm, options) {
     options = options || {};
     var title = options.title || ( global.snipping ? "Snipe success" : "Catch success" );
     var toast = global.snipping ? toastr.success : toastr.info;
-    var content = `<div>${pkm.name} (lvl ${pkm.lvl})</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
+    var info = pkm.name;
+    if (pkm.lvl) info += ` (lvl ${pkm.lvl})`;
+
+    var content = `<div>${info}</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
     toast(content, title, {
         "progressBar": true,
         "positionClass": "toast-bottom-left",
