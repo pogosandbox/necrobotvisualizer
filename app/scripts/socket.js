@@ -21,7 +21,9 @@ function listenToWebSocket() {
                 var pkm = {
                     id: msg.Id,
                     name: inventory.getPokemonName(msg.Id),
-                    lvl: msg.Level
+                    lvl: msg.Level,
+                    lat: msg.Latitude,
+                    lng: msg.Longitude
                 };
                 if (!global.snipping) {
                     global.map.addCatch(pkm);
@@ -89,14 +91,21 @@ function listenToWebSocket() {
             global.map.displayInventory(items);
         } else if (msg.$type.indexOf("PokemonEvolveEvent") > 0) {
             // toast ?
+            var pkm = {
+                id: msg.Id,
+                name: inventory.getPokemonName(id)
+            };
             var id = msg.Id;
             var name = inventory.getPokemonName(id);
             console.log("Evolved: " + id + " - "+ name);
+            pokemonToast(pkm, { title: "A Pokemon Evolved" });
         } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
             // nothing
         } else if (msg.$type.indexOf("FortTargetEvent") > 0) {
             // nothing
-        } else if (msg.$type.indexOf("oticeEvent") > 0) {
+        } else if (msg.$type.indexOf("NoticeEvent") > 0) {
+            // nothing
+        } else if (msg.$type.indexOf("WarnEvent") > 0) {
             // nothing
         } else if (msg.$type.indexOf("SnipeScanEvent") > 0) {
             // nothing
@@ -108,8 +117,9 @@ function listenToWebSocket() {
     };
 }
 
-function pokemonToast(pkm) {
-    var title = global.snipping ? "Snipe success" : "Catch success";
+function pokemonToast(pkm, options) {
+    options = options || {};
+    var title = options.title || ( global.snipping ? "Snipe success" : "Catch success" );
     var toast = global.snipping ? toastr.success : toastr.info;
     var content = `<div>${pkm.name} (lvl ${pkm.lvl})</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
     toast(content, title, {
