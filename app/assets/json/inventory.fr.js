@@ -15,7 +15,7 @@ module.exports = {
     402: "Encens Spicy",
     403: "Encens Cool",
     404: "Encens Floral",
-    501: "Troy Disk",
+    501: "Leurre",
     602: "X Attack",
     603: "X Defense",
     604: "X Miracle",

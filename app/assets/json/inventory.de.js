@@ -10,7 +10,7 @@ module.exports = {
     104: "Max Potion",
     201: "Revive",
     202: "Max Revive",
-    301: "Lucky Egg",
+    301: "Lure",
     401: "Incense",
     402: "Incense Spicy",
     403: "Incense Cool",
