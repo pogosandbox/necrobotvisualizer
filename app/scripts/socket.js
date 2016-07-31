@@ -66,21 +66,24 @@ function listenToWebSocket() {
         } else if (msg.$type.indexOf("EggsListEvent") > 0) {
             console.log(msg);
             var incubators = Array.from(msg.Incubators.$values, i => {
-                return {
-                    type: i.ItemId == 901 ? "incubator-unlimited" : "incubator",
-                    doneDist: i.StartKmWalked,
-                    totalDist: i.TargetKmWalked
+                if (i.TargetKmWalked != 0 || i.StartKmWalked != 0) {
+                    return {
+                        type: i.ItemId == 901 ? "incubator-unlimited" : "incubator",
+                        totalDist: i.TargetKmWalked - i.StartKmWalked,
+                        doneDist: msg.PlayerKmWalked - i.StartKmWalked
+                    }
                 }
             });
             var eggs = Array.from(msg.UnusedEggs.$values, i => {
                 return {
                     type: "egg",
-                    doneDist: i.EggKmWalkedStart,
-                    totalDist: i.EggKmWalkedTarget
+                    totalDist: i.EggKmWalkedTarget,
+                    doneDist: i.EggKmWalkedStart
                 }
             });
             global.map.displayEggsList(incubators.concat(eggs));
         } else if (msg.$type.indexOf("InventoryListEvent") > 0) {
+            console.log(msg);
             var items = Array.from(msg.Items.$values, item => {
                 return {
                     name: inventory.getItemName(item.ItemId),
@@ -95,8 +98,7 @@ function listenToWebSocket() {
             console.log(msg);
             var pkm = {
                 id: msg.Id,
-                name: inventory.getPokemonName(msg.id),
-                lvl: "?"
+                name: inventory.getPokemonName(msg.id)
             };
             pokemonToast(pkm, { title: "A Pokemon Evolved" });
         } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
@@ -129,6 +131,6 @@ function pokemonToast(pkm, options) {
         "progressBar": true,
         "positionClass": "toast-bottom-left",
         "timeOut": "5000",
-        closeButton: true
+        "closeButton": true
     })
 }
