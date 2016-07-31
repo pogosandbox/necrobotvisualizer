@@ -67,6 +67,7 @@ function listenToWebSocket() {
             console.log(msg);
             var incubators = Array.from(msg.Incubators.$values, i => {
                 if (i.TargetKmWalked != 0 || i.StartKmWalked != 0) {
+                    msg.PlayerKmWalked = msg.PlayerKmWalked || 0;
                     return {
                         type: i.ItemId == 901 ? "incubator-unlimited" : "incubator",
                         totalDist: i.TargetKmWalked - i.StartKmWalked,
@@ -120,6 +121,8 @@ function listenToWebSocket() {
 }
 
 function pokemonToast(pkm, options) {
+    if (global.config.noPopup) return;
+
     options = options || {};
     var title = options.title || ( global.snipping ? "Snipe success" : "Catch success" );
     var toast = global.snipping ? toastr.success : toastr.info;

@@ -7,6 +7,10 @@ form {
     font-size: 100%;
 }
 
+.content h2 {
+    text-align: center;
+}
+
 .config-form {
     margin:10px 0;
     max-width: 80%;

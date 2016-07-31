@@ -9,6 +9,7 @@
         locale: "en",
         websocket: "wss://localhost:14251",
         followPlayer: false,
+        noPopup: false
     };
 
     var load = function() {

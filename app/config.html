@@ -26,6 +26,7 @@
             appconfig.locale = $("#slLocale").val();
             appconfig.websocket = $("#txtWebSocket").val();
             appconfig.followPlayer = $("#chkFllowPlayer").prop("checked") || false;
+            appconfig.noPopup = $("#chkNoPopup").prop("checked") || false;
 
             config.save(appconfig);
             navigateAway();
@@ -38,7 +39,8 @@
         $(function() {
             $("#slLocale").val(appconfig.locale);
             $("#txtWebSocket").val(appconfig.websocket);
-            $("#chkFllowPlayer").prop('checked', appconfig.followPlayer || false);
+            $("#chkFollowPlayer").prop('checked', appconfig.followPlayer || false);
+            $("#chkNoPopup").prop('checked', appconfig.noPopup || false);
 
             $("#saveBtn").click(saveConfig);
             $("#cancelBtn").click(navigateAway);
@@ -48,7 +50,7 @@
   
   <body>
     <div class="content">
-        <h2>Config</h2>
+        <h2>Visualizer Config</h2>
         <form>
             <ul class="config-form">
                 <li>
@@ -61,7 +63,8 @@
                 </li>
                 <li>
                     <label>Map options</label>
-                    <input type="checkbox" id="chkFllowPlayer" class="field-comon" /><span>Follow player on map</span>
+                    <div><input type="checkbox" id="chkFollowPlayer" class="field-comon" /><span>Follow player on map</span></div>
+                    <div><input type="checkbox" id="chkNoPopup" class="field-comon" /><span>Disable popups</span></div>
                 </li>
                 <li>
                     <label>Bot Websocket</label>
