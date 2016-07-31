@@ -1,6 +1,6 @@
 {
   "name": "necrobotvisualizer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "MobBot Visualizer",
   "author": "Nicolas Schmitt",
   "main": "main.js",
