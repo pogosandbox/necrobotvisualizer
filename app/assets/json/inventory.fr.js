@@ -1,6 +1,6 @@
 module.exports = {
     0: "Inconnu",
-    1: "Poké ball",
+    1: "Poké Ball",
     2: "Super Ball",
     3: "Ultra Ball",
     4: "Master Ball",
@@ -26,6 +26,6 @@ module.exports = {
     801: "Appareil photo",
     901: "Incubateur ∞",
     902: "Incubateur",
-    1001: "Pokemon Storage Upgrade",
-    1002: "Item Storage Upgrade"
+    1001: "Exte. stockage pokémon",
+    1002: "Agrandir Sac"
 }
