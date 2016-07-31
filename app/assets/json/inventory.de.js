@@ -26,6 +26,6 @@ module.exports = {
     801: "Kamera",
     901: "Ei-Brutmaschine ∞",
     902: "Ei-Brutmaschine",
-    1001: "Pokémon-Aufbewahung-Plus",
+    1001: "Pokémon-Aufbewahrung-Plus",
     1002: "Beutel-Plus"
 }
