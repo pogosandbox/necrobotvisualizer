@@ -1,7 +1,7 @@
-# MobBot Visualizer (formerly NecrobotVisualizer)
+# NecrobotVisualizer
 
-You have to be up to date on the bot side (master or maybe latest release).  
-In the Visualizer, the url on the config page should match the port you configured on the bot side (both have the same default).
+You have to be up to date on the Necrobot side (master or maybe latest release).  
+In the Visualizer, the url on the config page should match the port you configured on NecroBot side (both have the same default).
 
 ## Installer
 
@@ -19,4 +19,6 @@ npm i && npm start
 
 ## Example
 
-![Screenshot](https://github.com/nicoschmitt/necrobotvisualizer/blob/master/screenshot.jpg?raw=true)
+![Screenshot](https://github.com/nicoschmitt/necrobotvisualizer/blob/master/screenshots/01.jpg?raw=true)
+![Screenshot](https://github.com/nicoschmitt/necrobotvisualizer/blob/master/screenshots/02.jpg?raw=true)
+![Screenshot](https://github.com/nicoschmitt/necrobotvisualizer/blob/master/screenshots/03.jpg?raw=true)
