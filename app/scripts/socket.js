@@ -17,9 +17,7 @@ function listenToWebSocket() {
                 });
             }
         } else if (msg.$type.indexOf("PokemonCaptureEvent") > 0) {
-            //console.log(msg);
-            // 1 == CatchSuccess
-            if (msg.Status = 1) {
+            if (msg.Status = 1 && msg.Exp > 0) {
                 var pkm = {
                     id: msg.Id,
                     name: inventory.getPokemonName(msg.Id),
@@ -30,10 +28,6 @@ function listenToWebSocket() {
                 }
                 pokemonToast(pkm);
             }
-        } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
-            // nothing
-        } else if (msg.$type.indexOf("FortTargetEvent") > 0) {
-            // nothing
         } else if (msg.$type.indexOf("FortUsedEvent") > 0) {
             //console.log(msg);
             if (msg.Latitude && msg.Longitude) {
@@ -93,6 +87,21 @@ function listenToWebSocket() {
                 }
             });
             global.map.displayInventory(items);
+        } else if (msg.$type.indexOf("PokemonEvolveEvent") > 0) {
+            // toast ?
+            var id = msg.Id;
+            var name = inventory.getPokemonName(id);
+            console.log("Evolved: " + id + " - "+ name);
+        } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
+            // nothing
+        } else if (msg.$type.indexOf("FortTargetEvent") > 0) {
+            // nothing
+        } else if (msg.$type.indexOf("oticeEvent") > 0) {
+            // nothing
+        } else if (msg.$type.indexOf("SnipeScanEvent") > 0) {
+            // nothing
+        } else if (msg.$type.indexOf("ItemRecycledEvent") > 0) {
+            // nothing
         } else {
             console.log(msg);
         }
