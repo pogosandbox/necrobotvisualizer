@@ -26,6 +26,6 @@ module.exports = {
     801: "Appareil photo",
     901: "Incubateur ∞",
     902: "Incubateur",
-    1001: "Exte. stockage pokémon",
-    1002: "Agrandir Sac"
+    1001: "Ext. pokémon",
+    1002: "Ext. objets"
 }
