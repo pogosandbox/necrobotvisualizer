@@ -9,11 +9,17 @@
     var config = require("./scripts/config");
     global.config = config.load();
 
-    $(function() {
-        $("#pokemonLink").click(() => { global.ws.send("PokemonList"); });
-        $("#eggsLink").click(() => { global.ws.send("EggsList"); });
-        $("#inventoryLink").click(() => { global.ws.send("InventoryList"); });
+    var wssend = function(obj) { 
+        var data = typeof(obj) != "object" ? obj : JSON.stringify(obj);
+        global.ws.send(data); 
+    };
 
+    $(function() {
+        $("#pokemonLink").click(() => { wssend("PokemonList"); });
+        $("#eggsLink").click(() => { wssend("EggsList"); });
+        $("#inventoryLink").click(() => { wssend("InventoryList"); });
+
+        $("#sortById").click(() => global.map.displayPokemonList(null, "id"));
         $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
         $("#sortByIv").click(() => global.map.displayPokemonList(null, "iv"));
 
@@ -30,6 +36,15 @@
         $("#settingsLink").click(() => {
             global.map.saveContext();
             window.location = "config.html";
+        });
+
+        $(".inventory .data").on("click", "a.transferAction", function() {
+            var transfer = $(this).parent();
+            wssend({
+                Command: "TransferPokemon",
+                PokemonId: transfer.attr("id")
+            });
+            transfer.parent().fadeOut();
         });
 
         if (global.config.websocket) {

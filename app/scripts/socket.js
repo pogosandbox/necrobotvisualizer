@@ -9,14 +9,15 @@ function listenToWebSocket() {
     ws.onopen = () => { console.log("Connected to Bot"); };
     ws.onmessage = function (evt) {
         var msg = JSON.parse(evt.data);
-        if (msg.$type.indexOf("UpdatePositionEvent") > 0) {
+        var command = msg.$type || msg.Command;
+        if (command.indexOf("UpdatePositionEvent") > 0) {
             if (!global.snipping) {
                 global.map.addToPath({ 
                     lat: msg.Latitude, 
                     lng: msg.Longitude 
                 });
             }
-        } else if (msg.$type.indexOf("PokemonCaptureEvent") > 0) {
+        } else if (command.indexOf("PokemonCaptureEvent") > 0) {
             if (msg.Status = 1 && msg.Exp > 0) {
                 var pkm = {
                     id: msg.Id,
@@ -30,7 +31,7 @@ function listenToWebSocket() {
                 }
                 pokemonToast(pkm);
             }
-        } else if (msg.$type.indexOf("FortUsedEvent") > 0) {
+        } else if (command.indexOf("FortUsedEvent") > 0) {
             //console.log(msg);
             if (msg.Latitude && msg.Longitude) {
                 global.map.addVisitedPokestop({
@@ -40,7 +41,7 @@ function listenToWebSocket() {
                     lng: msg.Longitude
                 });
             }
-        } else if (msg.$type.indexOf("PokeStopListEvent") > 0) {
+        } else if (command.indexOf("PokeStopListEvent") > 0) {
             var forts = Array.from(msg.Forts.$values.filter(f => f.Type == 1), f => {
                 return {
                     id: f.Id,
@@ -49,13 +50,15 @@ function listenToWebSocket() {
                 }
             });
             global.map.addPokestops(forts);
-        } else if (msg.$type.indexOf("SnipeModeEvent") > 0) {
+        } else if (command.indexOf("SnipeModeEvent") > 0) {
             if (msg.Active) console.log("Sniper Mode");
             global.snipping = msg.Active;
-        } else if (msg.$type.indexOf("PokemonListEvent") > 0) {
+        } else if (command.indexOf("PokemonListEvent") > 0) {
+            console.log(evt);
             var pkm = Array.from(msg.PokemonList.$values, p => {
                 return {
-                    id: p.Item1.PokemonId,
+                    id: p.Item1.Id,
+                    pokemonId: p.Item1.PokemonId,
                     cp: p.Item1.Cp,
                     iv: p.Item2.toFixed(1),
                     name: p.Item1.Nickname || inventory.getPokemonName(p.Item1.PokemonId),
@@ -63,8 +66,7 @@ function listenToWebSocket() {
                 }
             });
             global.map.displayPokemonList(pkm);
-        } else if (msg.$type.indexOf("EggsListEvent") > 0) {
-            console.log(msg);
+        } else if (command.indexOf("EggsListEvent") > 0) {
             var incubators = Array.from(msg.Incubators.$values, i => {
                 if (i.TargetKmWalked != 0 || i.StartKmWalked != 0) {
                     msg.PlayerKmWalked = msg.PlayerKmWalked || 0;
@@ -83,7 +85,7 @@ function listenToWebSocket() {
                 }
             });
             global.map.displayEggsList(incubators.concat(eggs));
-        } else if (msg.$type.indexOf("InventoryListEvent") > 0) {
+        } else if (command.indexOf("InventoryListEvent") > 0) {
             console.log(msg);
             var items = Array.from(msg.Items.$values, item => {
                 return {
@@ -94,25 +96,25 @@ function listenToWebSocket() {
                 }
             });
             global.map.displayInventory(items);
-        } else if (msg.$type.indexOf("PokemonEvolveEvent") > 0) {
-            // toast ?
-            console.log(msg);
+        } else if (command.indexOf("PokemonEvolveEvent") > 0) {
             var pkm = {
                 id: msg.Id,
-                name: inventory.getPokemonName(msg.id)
+                name: inventory.getPokemonName(msg.Id)
             };
             pokemonToast(pkm, { title: "A Pokemon Evolved" });
-        } else if (msg.$type.indexOf("TransferPokemonEvent") > 0) {
+        } else if (command.indexOf("TransferPokemonEvent") > 0) {
             // nothing
-        } else if (msg.$type.indexOf("FortTargetEvent") > 0) {
+        } else if (command.indexOf("FortTargetEvent") > 0) {
             // nothing
-        } else if (msg.$type.indexOf("NoticeEvent") > 0) {
+        } else if (command.indexOf("NoticeEvent") > 0) {
             // nothing
-        } else if (msg.$type.indexOf("WarnEvent") > 0) {
+        } else if (command.indexOf("WarnEvent") > 0) {
             // nothing
-        } else if (msg.$type.indexOf("SnipeScanEvent") > 0) {
+        } else if (command.indexOf("SnipeScanEvent") > 0) {
             // nothing
-        } else if (msg.$type.indexOf("ItemRecycledEvent") > 0) {
+        } else if (command.indexOf("ItemRecycledEvent") > 0) {
+            // nothing
+        } else if (command.indexOf("EvolveCountEvent") > 0) {
             // nothing
         } else {
             console.log(msg);
@@ -126,10 +128,10 @@ function pokemonToast(pkm, options) {
     options = options || {};
     var title = options.title || ( global.snipping ? "Snipe success" : "Catch success" );
     var toast = global.snipping ? toastr.success : toastr.info;
-    var info = pkm.name;
-    if (pkm.lvl) info += ` (lvl ${pkm.lvl})`;
+    var pkminfo = pkm.name;
+    if (pkm.lvl) pkminfo += ` (lvl ${pkm.lvl})`;
 
-    var content = `<div>${info}</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
+    var content = `<div>${pkminfo}</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
     toast(content, title, {
         "progressBar": true,
         "positionClass": "toast-bottom-left",

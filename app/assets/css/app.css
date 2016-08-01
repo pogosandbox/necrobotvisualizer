@@ -136,8 +136,9 @@ body, html, .content {
 }
 
 .pokemon {
+  position: relative;
   width: 120px;
-  height: 100px;
+  height: 120px;
   padding: 5px;
   margin: 10px;
   display: flex;
@@ -155,9 +156,31 @@ body, html, .content {
 }
 
 .pokemon img {
-  max-width: 55px;
-  max-height: 55px;
+  max-width: 75px;
+  max-height: 75px;
   margin: auto;
+}
+
+.pokemon:hover img {
+  opacity: 0.3;
+}
+
+.pokemon .transfer {
+  display:none;
+}
+
+.pokemon:hover .transfer {
+  display: flex;
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3000;
+}
+
+.pokemon:hover .transfer img {
+    opacity: 1;
 }
 
 .close {

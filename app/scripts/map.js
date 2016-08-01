@@ -163,8 +163,11 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     this.pokemonList.forEach(function(elt) {
         div.append(`
             <div class="pokemon">
+                <div class="transfer" id='${elt.id}'>
+                    <a href="#" class="transferAction"><img src="./assets/img/recyclebin.png" /></a>
+                </div>
                 <span class="info">CP: ${elt.cp} | IV: ${elt.iv}%</span>
-                <span class="imgspan"><img src="./assets/pokemon/${elt.id}.png" /></span>
+                <span class="imgspan"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
                 <span>${elt.name}</span>
             </div>
         `);
@@ -175,6 +178,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
 
 Map.prototype.displayEggsList = function(eggs) {
     console.log("Eggs list");
+    $(".inventory .sort").hide();
     var div = $(".inventory .data")
     div.html("");
     eggs.forEach(function(elt) {
@@ -190,6 +194,7 @@ Map.prototype.displayEggsList = function(eggs) {
 
 Map.prototype.displayInventory = function(eggs) {
     console.log("Inventory list");
+    $(".inventory .sort").hide();
     var div = $(".inventory .data")
     div.html("");
     eggs.forEach(function(elt) {
