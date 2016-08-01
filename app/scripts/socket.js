@@ -54,7 +54,7 @@ function listenToWebSocket() {
                     lng: msg.Longitude
                 };
                 global.map.addCatch(pkm);
-                pokemonToast(pkm);
+                pokemonToast(pkm, { ball: msg.Pokeball });
             }
         } else if (command.indexOf("FortUsedEvent") >= 0) {
             //console.log(msg);
@@ -170,7 +170,10 @@ function pokemonToast(pkm, options) {
     var pkminfo = pkm.name;
     if (pkm.lvl) pkminfo += ` (lvl ${pkm.lvl})`;
 
-    var content = `<div>${pkminfo}</div><div><img src='./assets/pokemon/${pkm.id}.png' height='50' /></div>`;
+    var content = `<div>${pkminfo}</div><div>`;
+    content += `<img src='./assets/pokemon/${pkm.id}.png' height='50' />`;
+    if (options.ball) content += `<img src='./assets/inventory/${options.ball}.png' height='30' />`;
+    content += `</div>`;
     toast(content, title, {
         "progressBar": true,
         "positionClass": "toast-bottom-left",
