@@ -60,7 +60,8 @@
             var transfer = $(this).parent();
             wssend({
                 Command: "TransferPokemon",
-                PokemonId: transfer.attr("id")
+                PokemonId: transfer.attr("id"),
+                Data: transfer.attr("id")
             });
             transfer.parent().fadeOut();
         });
@@ -69,7 +70,8 @@
             var evolve = $(this).parent();
             wssend({
                 Command: "EvolvePokemon",
-                PokemonId: evolve.attr("id")
+                PokemonId: evolve.attr("id"),
+                Data: evolve.attr("id")
             });
             $(".inventory").removeClass("active");
         });
