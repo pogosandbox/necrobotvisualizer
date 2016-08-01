@@ -5,8 +5,20 @@ function listenToWebSocket() {
 
     ws = new WebSocket(global.config.websocket);
     global.ws = ws;
-    ws.onclose = () => { setTimeout(listenToWebSocket, 1000) };
-    ws.onopen = () => { console.log("Connected to Bot"); };
+    global.connected = false;
+    ws.onclose = (evt) => {
+        $(".loading").text("Connecting to the bot...");
+        setTimeout(listenToWebSocket, 1000);
+        if (global.connected) {
+            errorToast("Connection lost.");
+            global.connected = false;
+        }
+    };
+    ws.onopen = () => { 
+        console.log("Connected to Bot");
+        global.connected = true;
+        $(".loading").text("Waiting to get GPS coordinates from Bot..."); 
+    };
     ws.onmessage = function (evt) {
         var msg = JSON.parse(evt.data);
         var command = msg.$type || msg.Command;
@@ -54,7 +66,6 @@ function listenToWebSocket() {
             if (msg.Active) console.log("Sniper Mode");
             global.snipping = msg.Active;
         } else if (command.indexOf("PokemonListEvent") > 0) {
-            console.log(evt);
             var pkm = Array.from(msg.PokemonList.$values, p => {
                 return {
                     id: p.Item1.Id,
@@ -116,10 +127,21 @@ function listenToWebSocket() {
             // nothing
         } else if (command.indexOf("EvolveCountEvent") > 0) {
             // nothing
+        } else if (command.indexOf("ErrorEvent") > 0) {
+            errorToast(msg.Message);
         } else {
             console.log(msg);
         }
     };
+}
+
+function errorToast(message) {
+    toastr.error(message, "Error", {
+        "progressBar": true,
+        "positionClass": "toast-top-left",
+        "timeOut": "5000",
+        "closeButton": true
+    });
 }
 
 function pokemonToast(pkm, options) {
