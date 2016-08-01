@@ -19,7 +19,7 @@
         $("#eggsLink").click(() => { wssend("EggsList"); });
         $("#inventoryLink").click(() => { wssend("InventoryList"); });
 
-        $("#sortById").click(() => global.map.displayPokemonList(null, "id"));
+        $("#sortById").click(() => global.map.displayPokemonList(null, "pokemonId"));
         $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
         $("#sortByIv").click(() => global.map.displayPokemonList(null, "iv"));
 

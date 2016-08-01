@@ -158,6 +158,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     if (sortBy) {
         this.pokemonList = this.pokemonList.sort((p1, p2) => p2[sortBy] - p1[sortBy]);
     }
+    $(".inventory .numberinfo").text(this.pokemonList.length + "/250");
     var div = $(".inventory .data");
     div.html(``);
     this.pokemonList.forEach(function(elt) {
@@ -179,6 +180,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
 Map.prototype.displayEggsList = function(eggs) {
     console.log("Eggs list");
     $(".inventory .sort").hide();
+    $(".inventory .numberinfo").text(eggs.length + "/9");
     var div = $(".inventory .data")
     div.html("");
     eggs.forEach(function(elt) {
@@ -192,12 +194,13 @@ Map.prototype.displayEggsList = function(eggs) {
     $(".inventory").show();
 }
 
-Map.prototype.displayInventory = function(eggs) {
+Map.prototype.displayInventory = function(items) {
     console.log("Inventory list");
     $(".inventory .sort").hide();
+    $(".inventory .numberinfo").text(items.length + "/350");
     var div = $(".inventory .data")
-    div.html("");
-    eggs.forEach(function(elt) {
+    div.html(``);
+    items.forEach(function(elt) {
         div.append(`
             <div class="eggs">
                 <span>x${elt.count}</span>

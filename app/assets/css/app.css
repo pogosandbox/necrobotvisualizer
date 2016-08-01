@@ -150,6 +150,11 @@ body, html, .content {
   font-size: 80%;
 }
 
+.inventory .numberinfo {
+  margin: 15px;
+  font-size: 100%;
+}
+
 .pokemon .imgspan {
   flex-grow: 1; 
   display: flex;
