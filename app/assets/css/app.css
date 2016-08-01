@@ -184,6 +184,7 @@ body, html, .content {
 
 .pokemon:hover .transfer {
   display: flex;
+  flex-direction: row;
   position: absolute;
   margin: auto;
   top: 50%;
