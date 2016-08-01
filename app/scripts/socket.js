@@ -25,7 +25,6 @@ function listenToWebSocket() {
         console.log("Connected to Bot");
         global.connected = true;
         $(".loading").text("Waiting to get GPS coordinates from Bot..."); 
-        ws.send(JSON.stringify({ Command: "GetPokemonSettings" }));
     };
     ws.onmessage = function (evt) {
         var msg = JSON.parse(evt.data);
@@ -36,7 +35,11 @@ function listenToWebSocket() {
                 elt.EvolutionIds = elt.EvolutionIds.$values;
                 return elt;
             })
+            console.log(global.pokemonSettings);
             localStorage.setItem("pokemonSettings", JSON.stringify(global.pokemonSettings));
+        } else if (command.indexOf("ProfileEvent") >= 0) {
+            // once connected, ask for pokemon settings
+            ws.send(JSON.stringify({ Command: "GetPokemonSettings" }));
         } else if (command.indexOf("UpdatePositionEvent") >= 0) {
             if (!global.snipping) {
                 global.map.addToPath({ 
@@ -90,7 +93,8 @@ function listenToWebSocket() {
                     iv: p.Item2.toFixed(1),
                     name: p.Item1.Nickname || inventory.getPokemonName(p.Item1.PokemonId),
                     realname: inventory.getPokemonName(p.Item1.PokemonId, "en"),
-                    candy: p.Item3
+                    candy: p.Item3,
+                    candyToEvolve: pkmInfo.CandyToEvolve
                 }
             });
             global.map.displayPokemonList(pkm);
@@ -143,6 +147,8 @@ function listenToWebSocket() {
         } else if (command.indexOf("ItemRecycledEvent") >= 0) {
             // nothing
         } else if (command.indexOf("EvolveCountEvent") >= 0) {
+            // nothing
+        } else if (command.indexOf("DebugEvent") >= 0) {
             // nothing
         } else if (command.indexOf("ErrorEvent") >= 0) {
             errorToast(msg.Message);
