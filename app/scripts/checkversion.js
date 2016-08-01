@@ -20,7 +20,7 @@ $(function() {
         try {
             var api = "https://api.github.com/repos/nicoschmitt/necrobotvisualizer/releases";
             $.getJSON(api, (data) => {
-                data = data.filter(r => !r.prerelease);
+                data = data.filter(r => !r.prerelease && !r.draft);
                 var ver = data[0].name;
                 var url = data[0].html_url;
                 console.log("Latest version: " + ver);

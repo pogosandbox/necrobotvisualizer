@@ -15,11 +15,29 @@
     };
 
     $(function() {
-        $("#pokemonLink").click(() => { wssend("PokemonList"); });
-        $("#eggsLink").click(() => { wssend("EggsList"); });
-        $("#inventoryLink").click(() => { wssend("InventoryList"); });
+        $("#pokemonLink").click( function() {
+            if ($(".inventory").css("opacity") == "1" && $(".inventory .data .pokemon").length) {
+                $(".inventory").removeClass("active");
+            } else {
+                wssend("PokemonList");
+            }
+        });
+        $("#eggsLink").click( function() {
+            if ($(".inventory").css("opacity") == "1" && $(".inventory .data .eggs").length) {
+                $(".inventory").removeClass("active");
+            } else { 
+                wssend("EggsList"); 
+            }
+        });
+        $("#inventoryLink").click( function() {
+            if ($(".inventory").css("opacity") == "1" && $(".inventory .data .items").length) {
+                $(".inventory").removeClass("active");
+            } else {
+                wssend("InventoryList"); 
+            }
+        });
 
-        $("#sortById").click(() => global.map.displayPokemonList(null, "id"));
+        $("#sortById").click(() => global.map.displayPokemonList(null, "pokemonId"));
         $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
         $("#sortByIv").click(() => global.map.displayPokemonList(null, "iv"));
 
@@ -45,6 +63,15 @@
                 PokemonId: transfer.attr("id")
             });
             transfer.parent().fadeOut();
+        });
+
+        $(".inventory .data").on("click", "a.evolveAction", function() {
+            var evolve = $(this).parent();
+            wssend({
+                Command: "EvolvePokemon",
+                PokemonId: evolve.attr("id")
+            });
+            $(".inventory").removeClass("active");
         });
 
         if (global.config.websocket) {

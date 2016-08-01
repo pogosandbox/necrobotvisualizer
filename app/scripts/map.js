@@ -103,17 +103,6 @@ Map.prototype.addToPath = function(pt) {
 }
 
 Map.prototype.addCatch = function(pt) {
-    if (!pt.lat) {
-        if (this.steps.length > 0) {
-            var pos = this.steps.pop();
-            pt.lat = pos.lat;
-            pt.lng = pos.lng;
-        } else {
-            // no position to pin to, abort
-            return;
-        }
-    }
-
     var pkm = `${pt.name} (lvl ${pt.lvl})`;
     console.log("Catch " + pkm);
 
@@ -158,13 +147,17 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     if (sortBy) {
         this.pokemonList = this.pokemonList.sort((p1, p2) => p2[sortBy] - p1[sortBy]);
     }
+    $(".inventory .numberinfo").text(this.pokemonList.length + "/250");
     var div = $(".inventory .data");
     div.html(``);
     this.pokemonList.forEach(function(elt) {
+        var canEvolve = elt.canEvolve && !elt.inGym;
+        var evolveStyle = canEvolve ? "" : "style='display:none'";
         div.append(`
             <div class="pokemon">
                 <div class="transfer" id='${elt.id}'>
-                    <a href="#" class="transferAction"><img src="./assets/img/recyclebin.png" /></a>
+                    <a title='Transfer' href="#" class="transferAction"><img src="./assets/img/recyclebin.png" /></a>
+                    <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
                 <span class="info">CP: ${elt.cp} | IV: ${elt.iv}%</span>
                 <span class="imgspan"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
@@ -173,12 +166,13 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
         `);
     });
     $(".pokemonsort").show();
-    $(".inventory").show();
+    $(".inventory").show().addClass("active");
 }
 
 Map.prototype.displayEggsList = function(eggs) {
     console.log("Eggs list");
     $(".inventory .sort").hide();
+    $(".inventory .numberinfo").text(eggs.length + "/9");
     var div = $(".inventory .data")
     div.html("");
     eggs.forEach(function(elt) {
@@ -189,22 +183,23 @@ Map.prototype.displayEggsList = function(eggs) {
             </div>
         `);
     });
-    $(".inventory").show();
+    $(".inventory").show().addClass("active");
 }
 
-Map.prototype.displayInventory = function(eggs) {
+Map.prototype.displayInventory = function(items) {
     console.log("Inventory list");
     $(".inventory .sort").hide();
+    $(".inventory .numberinfo").text(items.length + "/350");
     var div = $(".inventory .data")
-    div.html("");
-    eggs.forEach(function(elt) {
+    div.html(``);
+    items.forEach(function(elt) {
         div.append(`
-            <div class="eggs">
+            <div class="items">
                 <span>x${elt.count}</span>
                 <span class="imgspan"><img src="./assets/inventory/${elt.itemId}.png" /></span>
                 <span class="info">${elt.name}</span>
             </div>
         `);
     });
-    $(".inventory").show();
+    $(".inventory").show().addClass("active");
 }
