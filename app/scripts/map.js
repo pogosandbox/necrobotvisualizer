@@ -103,17 +103,6 @@ Map.prototype.addToPath = function(pt) {
 }
 
 Map.prototype.addCatch = function(pt) {
-    if (!pt.lat) {
-        if (this.steps.length > 0) {
-            var pos = this.steps.pop();
-            pt.lat = pos.lat;
-            pt.lng = pos.lng;
-        } else {
-            // no position to pin to, abort
-            return;
-        }
-    }
-
     var pkm = `${pt.name} (lvl ${pt.lvl})`;
     console.log("Catch " + pkm);
 
@@ -162,10 +151,13 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     var div = $(".inventory .data");
     div.html(``);
     this.pokemonList.forEach(function(elt) {
+        var canEvolve = elt.canEvolve && !elt.inGym;
+        var evolveStyle = canEvolve ? "" : "style='display:none'";
         div.append(`
             <div class="pokemon">
                 <div class="transfer" id='${elt.id}'>
-                    <a href="#" class="transferAction"><img src="./assets/img/recyclebin.png" /></a>
+                    <a title='Transfer' href="#" class="transferAction"><img src="./assets/img/recyclebin.png" /></a>
+                    <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
                 <span class="info">CP: ${elt.cp} | IV: ${elt.iv}%</span>
                 <span class="imgspan"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>

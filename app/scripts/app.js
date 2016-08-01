@@ -65,6 +65,15 @@
             transfer.parent().fadeOut();
         });
 
+        $(".inventory .data").on("click", "a.evolveAction", function() {
+            var evolve = $(this).parent();
+            wssend({
+                Command: "EvolvePokemon",
+                PokemonId: evolve.attr("id")
+            });
+            $(".inventory").removeClass("active");
+        });
+
         if (global.config.websocket) {
             // settings ok, let's go
             global.map = new Map("map");
