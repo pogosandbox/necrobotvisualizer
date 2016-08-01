@@ -15,7 +15,7 @@ You can also choose local for Pokemon name display.
 
 ## Run from Code
 
-1. Instal ![nodejs](https://nodejs.org/en/download/)
+1. Instal [nodejs](https://nodejs.org/en/download/)
 2. Start the node command line
 3. Navigate to your necrobotvisualizer folder
 4. To install enter: ```npm install```
