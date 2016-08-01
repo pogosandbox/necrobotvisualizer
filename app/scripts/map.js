@@ -173,7 +173,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
         `);
     });
     $(".pokemonsort").show();
-    $(".inventory").show();
+    $(".inventory").show().addClass("active");
 }
 
 Map.prototype.displayEggsList = function(eggs) {
@@ -189,7 +189,7 @@ Map.prototype.displayEggsList = function(eggs) {
             </div>
         `);
     });
-    $(".inventory").show();
+    $(".inventory").show().addClass("active");
 }
 
 Map.prototype.displayInventory = function(eggs) {
@@ -199,12 +199,12 @@ Map.prototype.displayInventory = function(eggs) {
     div.html("");
     eggs.forEach(function(elt) {
         div.append(`
-            <div class="eggs">
+            <div class="items">
                 <span>x${elt.count}</span>
                 <span class="imgspan"><img src="./assets/inventory/${elt.itemId}.png" /></span>
                 <span class="info">${elt.name}</span>
             </div>
         `);
     });
-    $(".inventory").show();
+    $(".inventory").show().addClass("active");
 }

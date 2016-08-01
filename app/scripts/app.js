@@ -15,9 +15,27 @@
     };
 
     $(function() {
-        $("#pokemonLink").click(() => { wssend("PokemonList"); });
-        $("#eggsLink").click(() => { wssend("EggsList"); });
-        $("#inventoryLink").click(() => { wssend("InventoryList"); });
+        $("#pokemonLink").click( function() {
+            if ($(".inventory").css("opacity") == "1" && $(".inventory .data .pokemon").length) {
+                $(".inventory").removeClass("active");
+            } else {
+                wssend("PokemonList");
+            }
+        });
+        $("#eggsLink").click( function() {
+            if ($(".inventory").css("opacity") == "1" && $(".inventory .data .eggs").length) {
+                $(".inventory").removeClass("active");
+            } else { 
+                wssend("EggsList"); 
+            }
+        });
+        $("#inventoryLink").click( function() {
+            if ($(".inventory").css("opacity") == "1" && $(".inventory .data .items").length) {
+                $(".inventory").removeClass("active");
+            } else {
+                wssend("InventoryList"); 
+            }
+        });
 
         $("#sortById").click(() => global.map.displayPokemonList(null, "id"));
         $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
