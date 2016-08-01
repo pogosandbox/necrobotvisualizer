@@ -22,7 +22,7 @@ $(function() {
             $.getJSON(api, (data) => {
                 data = data.filter(r => !r.prerelease);
                 var ver = data[0].name;
-                var url = data[0].url;
+                var url = data[0].html_url;
                 console.log("Latest version: " + ver);
                 if (cmpVersions(ver, global.version) > 0) {
                     console.log("New version available: " + ver);
