@@ -42,6 +42,11 @@ function listenToWebSocket() {
         } else if (command.indexOf("ProfileEvent") >= 0) {
             // once connected, ask for pokemon settings
             var username = msg.Profile.PlayerData.Username;
+            global.username = username;
+            global.storage = {
+                pokemon: msg.Profile.PlayerData.MaxPokemonStorage,
+                items: msg.Profile.PlayerData.MaxItemStorage
+            }
             document.title = `[${username}] ${document.title}`;
             ws.send(JSON.stringify({ Command: "GetPokemonSettings" }));
         } else if (command.indexOf("UpdatePositionEvent") >= 0) {
@@ -163,7 +168,7 @@ function listenToWebSocket() {
         } else if (command.indexOf("iconAnchor") >= 0) {
             // nothing
         } else if (command.indexOf("ErrorEvent") >= 0) {
-            errorToast(msg.Message);
+            console.log(msg.Message);
         } else {
             console.log(msg);
         }

@@ -155,7 +155,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
         this.pokemonList = this.pokemonList.sort((p1, p2) => p2[sortBy] - p1[sortBy]);
     }
 
-    $(".inventory .numberinfo").text(this.pokemonList.length + "/250");
+    $(".inventory .numberinfo").text(`${this.pokemonList.length}/${global.storage.pokemon}`);
     var div = $(".inventory .data");
     div.html(``);
     this.pokemonList.forEach(function(elt) {
@@ -202,7 +202,7 @@ Map.prototype.displayInventory = function(items) {
     console.log("Inventory list");
     $(".inventory .sort").hide();
     var count = items.filter(i => i.itemId != 901).reduce((prev, cur) => prev + cur.count, 0);
-    $(".inventory .numberinfo").text(count + "/350");
+    $(".inventory .numberinfo").text(`${count}/${global.storage.items}`);
     var div = $(".inventory .data")
     div.html(``);
     items.forEach(function(elt) {
