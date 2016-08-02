@@ -14,7 +14,7 @@ const BrowserWindow = electron.BrowserWindow
 let mainWindow
 
 function createWindow () {
-  mainWindow = new BrowserWindow({width: 1024, height: 760})
+  mainWindow = new BrowserWindow({width: 1200, height: 900})
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 

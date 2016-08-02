@@ -162,6 +162,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     this.pokemonList.forEach(function(elt) {
         var canEvolve = elt.canEvolve && !elt.inGym && elt.candy >= elt.candyToEvolve;
         var evolveStyle = canEvolve ? "" : "style='display:none'";
+        var evolveClass = canEvolve ? "canEvolve" : "";
         div.append(`
             <div class="pokemon">
                 <div class="transfer" id='${elt.id}'>
@@ -170,7 +171,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
                 </div>
                 <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong></span>
                 <span class="info">Candy: ${elt.candy}<span ${evolveStyle}>/${elt.candyToEvolve}</span></span>
-                <span class="imgspan"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
+                <span class="imgspan ${evolveClass}"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
                 <span class="name">${elt.name}</span>
             </div>
         `);
