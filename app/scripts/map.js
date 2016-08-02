@@ -152,7 +152,6 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     var div = $(".inventory .data");
     div.html(``);
     this.pokemonList.forEach(function(elt) {
-        console.log(elt);
         var canEvolve = elt.canEvolve && !elt.inGym && elt.candy >= elt.candyToEvolve;
         var evolveStyle = canEvolve ? "" : "style='display:none'";
         div.append(`

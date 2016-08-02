@@ -26,7 +26,7 @@ $(function() {
                 console.log("Latest version: " + ver);
                 if (cmpVersions(ver, global.version) > 0) {
                     console.log("New version available: " + ver);
-                    $(".message .data").html(`New version available. Check on GitHub</a> to download it. <a href='${url}'>Here</a>`);
+                    $(".message .data").html(`<div>New version available. Check on GitHub to download it. <a href='${url}'>Here</a></div>`);
                     $(".message").show();
                 }
             });

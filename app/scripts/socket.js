@@ -35,7 +35,6 @@ function listenToWebSocket() {
                 elt.EvolutionIds = elt.EvolutionIds.$values;
                 return elt;
             })
-            console.log(global.pokemonSettings);
             localStorage.setItem("pokemonSettings", JSON.stringify(global.pokemonSettings));
         } else if (command.indexOf("ProfileEvent") >= 0) {
             // once connected, ask for pokemon settings
@@ -94,7 +93,7 @@ function listenToWebSocket() {
                     name: p.Item1.Nickname || inventory.getPokemonName(p.Item1.PokemonId),
                     realname: inventory.getPokemonName(p.Item1.PokemonId, "en"),
                     candy: p.Item3,
-                    candyToEvolve: pkmInfo.CandyToEvolve
+                    candyToEvolve: pkmInfo ? pkmInfo.CandyToEvolve : 0
                 }
             });
             global.map.displayPokemonList(pkm);

@@ -101,7 +101,9 @@ body, html, .content {
   left: 0;
   right: 0;
   z-index: 2000;
-
+}
+.message .data {
+  line-height: 100%;
 }
 
 .inventory {

@@ -47,9 +47,13 @@
             }
         });
 
-        $(".close").click(function() {
+        $(".inventory .close").click(function() {
             $(this).parent().removeClass("active");
             $(".inventory .sort").hide();
+        });
+
+        $(".message .close").click(function() {
+            $(this).parent().hide();
         });
 
         $("#recycleLink").click(() => {
