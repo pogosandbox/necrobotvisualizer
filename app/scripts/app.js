@@ -41,8 +41,14 @@
         $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
         $("#sortByIv").click(() => global.map.displayPokemonList(null, "iv"));
 
+        $("#sortById, #sortByCp, #sortByIv").click( function() {
+            if(!$(this).hasClass("active")) {
+                $(this).toggleClass("active").siblings().removeClass("active");
+            }
+        });
+
         $(".close").click(function() {
-            $(this).parent().hide();
+            $(this).parent().removeClass("active");
             $(".inventory .sort").hide();
         });
 
