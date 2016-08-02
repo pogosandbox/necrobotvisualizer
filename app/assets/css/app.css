@@ -39,6 +39,7 @@ body, html, .content {
 
 .pkmIcon {
   max-height: 45px;
+  max-width: 60px;
 }
 
 .toolbar {
@@ -200,7 +201,7 @@ body, html, .content {
 .inventory .numberinfo {
   padding: .6em 13em;
   margin: .6em auto;
-  max-width: 200px;
+  max-width: 100px;
   display: inline-block;
   border: 1px solid #436a6b;
   border-radius: 5px;
@@ -227,7 +228,7 @@ body, html, .content {
 .pokemon .imgspan {
   flex-grow: 1;
   display: flex;
-   position: relative;
+  position: relative;
 }
 
 .pokemon img {

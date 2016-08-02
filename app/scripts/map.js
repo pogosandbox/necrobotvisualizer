@@ -58,21 +58,23 @@ Map.prototype.loadContext = function() {
 
             this.initPath();
 
-            for (var i = 0; i < this.pokestop.length; i++) {
-                var pt = this.pokestop[i];
+            for (var i = 0; i < this.pokestops.length; i++) {
+                var pt = this.pokestops[i];
                 var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
                 L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 50}).bindPopup(pt.name).addTo(this.layerPokestops);
             }
+
             for (var i = 0; i < this.catches.length; i++) {
                 var pt = this.catches[i];
-                var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon"});
-                L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100}).bindPopup(`${pt.name} (lvl ${pt.lvl})`).addTo(this.layerCatches);
+                var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon", iconAnchor: [20, 20]});
+                var pkm = `${pt.name} (lvl ${pt.lvl}) <br /> Cp:${pt.cp} Iv:${pt.iv}%`;
+                L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100}).bindPopup(pkm).addTo(this.layerCatches);
             }
         }
-    } catch(err) {}
+    } catch(err) { console.log(err); }
 }
 
-Map.prototype.initPath = function(force) {
+Map.prototype.initPath = function() {
     if (this.path != null) return true;
 
     if (!this.me) {
@@ -104,18 +106,15 @@ Map.prototype.addToPath = function(pt) {
 
 Map.prototype.addCatch = function(pt) {
     var pkm = `${pt.name} (lvl ${pt.lvl}) <br /> Cp:${pt.cp} Iv:${pt.iv}%`;
-    console.log("Catch " + pkm);
 
     this.catches.push(pt);
 
-    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon" });
+    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon", iconAnchor: [25, 25] });
     L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100 }).bindPopup(pkm).addTo(this.layerCatches);
 }
 
 Map.prototype.addVisitedPokestop = function(pt) {
     if (!pt.lat) return;
-
-    console.log("Pokestop visited.");
 
     this.pokestops.push(pt);
 
