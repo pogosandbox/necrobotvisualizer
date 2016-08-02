@@ -160,7 +160,8 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
                     <a title='Transfer' href="#" class="transferAction"><img src="./assets/img/recyclebin.png" /></a>
                     <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
-                <span class="info">CP: ${elt.cp} | IV: ${elt.iv}%</span>
+                <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong></span>
+                <span class="info">Candy: ${elt.candy}</span>
                 <span class="imgspan"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
                 <span>${elt.name}</span>
             </div>
