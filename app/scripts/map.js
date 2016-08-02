@@ -4,7 +4,7 @@ var Map = function(parentDiv) {
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 
     var osmCycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png');
-    var osmCycleTransport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png');    
+    var osmCycleTransport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png');
     var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png');
     var watercolor = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg');
 
@@ -190,7 +190,8 @@ Map.prototype.displayEggsList = function(eggs) {
 Map.prototype.displayInventory = function(items) {
     console.log("Inventory list");
     $(".inventory .sort").hide();
-    $(".inventory .numberinfo").text(items.length + "/350");
+    var count = itmes.filter(i => i.itemId != 901).length;
+    $(".inventory .numberinfo").text(count + "/350");
     var div = $(".inventory .data")
     div.html(``);
     items.forEach(function(elt) {
