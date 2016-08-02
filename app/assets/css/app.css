@@ -109,7 +109,8 @@ body, html, .content {
 .inventory {
   background-color: rgba(255,255,255,0.95);
   color: #436a6b;
-  width: 500px;
+  width: 60%;
+  min-width: 500px;
   height: 70%;;
   position: absolute;
   padding: 20px 0px 20px 20px;
@@ -180,7 +181,8 @@ body, html, .content {
 }
 
 .inventory .numberinfo {
-  margin: 12px 200px;
+  margin: 12px auto;
+  width: 100px;
   font-size: 100%;
   display: inline-block;
   border: 1px solid #436a6b;
