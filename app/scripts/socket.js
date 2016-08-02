@@ -155,6 +155,8 @@ function listenToWebSocket() {
             // nothing
         } else if (command.indexOf("DebugEvent") >= 0) {
             // nothing
+        } else if (command.indexOf("EggIncubatorStatusEvent") >= 0) {
+            // nothing
         } else if (command.indexOf("ErrorEvent") >= 0) {
             errorToast(msg.Message);
         } else {

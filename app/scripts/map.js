@@ -144,12 +144,16 @@ Map.prototype.addPokestops = function(forts) {
 Map.prototype.displayPokemonList = function(all, sortBy) {
     console.log("Pokemon list");
     this.pokemonList = all || this.pokemonList;
-    if (sortBy) {
-        if (sortBy == "pokemonId") {
-            this.pokemonList = this.pokemonList.sort((p1, p2) => p1[sortBy] - p2[sortBy]);
-        } else {
-            this.pokemonList = this.pokemonList.sort((p1, p2) => p2[sortBy] - p1[sortBy]);
-        }
+    if (!sortBy) {
+        sortBy = localStorage.getItem("sortPokemonBy") || "cp";
+    } else {
+        localStorage.setItem("sortPokemonBy", sortBy);
+    }
+
+    if (sortBy == "pokemonId") {
+        this.pokemonList = this.pokemonList.sort((p1, p2) => p1[sortBy] - p2[sortBy]);
+    } else {
+        this.pokemonList = this.pokemonList.sort((p1, p2) => p2[sortBy] - p1[sortBy]);
     }
 
     $(".inventory .numberinfo").text(this.pokemonList.length + "/250");

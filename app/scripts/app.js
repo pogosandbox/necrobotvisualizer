@@ -13,11 +13,12 @@
     };
 
     $(function() {
+        var sortBy = localStorage.getItem("sortPokemonBy") || "cp";
+        $("#sortBy" + sortBy).addClass("active").siblings().removeClass("active");
+
         $("#pokemonLink").click( function() {
             if ($(".inventory").css("opacity") == "1" && $(".inventory .data .pokemon").length) {
                 $(".inventory").removeClass("active");
-                $(".pokemonsort .sort a").removeClass("active");
-                $("#sortByCp").addClass("active");
             } else {
                 wssend("PokemonList");
             }
@@ -37,11 +38,11 @@
             }
         });
 
-        $("#sortById").click(() => global.map.displayPokemonList(null, "pokemonId"));
-        $("#sortByCp").click(() => global.map.displayPokemonList(null, "cp"));
-        $("#sortByIv").click(() => global.map.displayPokemonList(null, "iv"));
+        $("#sortBypokemonId").click(() => global.map.displayPokemonList(null, "pokemonId"));
+        $("#sortBycp").click(() => global.map.displayPokemonList(null, "cp"));
+        $("#sortByiv").click(() => global.map.displayPokemonList(null, "iv"));
 
-        $("#sortById, #sortByCp, #sortByIv").click( function() {
+        $("#sortBypokemonId, #sortBycp, #sortByiv").click( function() {
             if(!$(this).hasClass("active")) {
                 $(this).toggleClass("active").siblings().removeClass("active");
             }

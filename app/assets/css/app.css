@@ -114,8 +114,10 @@ body, html, .content {
 .inventory {
   background-color: rgba(255,255,255,0.95);
   color: #436a6b;
-  width: 500px;
-  height: 63%;;
+  width: 60%;
+  min-width: 500px;
+  height: 63%;
+  min-height: 400px;
   position: absolute;
   padding: .5em 0px .5em .5em;
   top: -50%;
@@ -150,7 +152,7 @@ body, html, .content {
 	background-color: #F5F5F5;
 }
 .data::-webkit-scrollbar {
-	width: 12px;
+	width: 18px;
 	background-color: #F5F5F5;
 }
 .data::-webkit-scrollbar-thumb {
@@ -196,11 +198,12 @@ body, html, .content {
 }
 
 .inventory .numberinfo {
-  margin: .6em 13em;
+  padding: 5px 15px;
+  margin: .6em auto;
+  max-width: 200px;
   display: inline-block;
   border: 1px solid #436a6b;
   border-radius: 5px;
-  padding: 3px;
 }
 
 .pokemonsort a {
