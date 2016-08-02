@@ -202,7 +202,7 @@ body, html, .content {
   padding: .6em 13em;
   margin: .6em auto;
   max-width: 100px;
-  display: inline-block;
+  display: block;
   border: 1px solid #436a6b;
   border-radius: 5px;
 }

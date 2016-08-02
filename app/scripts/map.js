@@ -162,10 +162,11 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
         var canEvolve = elt.canEvolve && !elt.inGym && elt.candy >= elt.candyToEvolve;
         var evolveStyle = canEvolve ? "" : "style='display:none'";
         var evolveClass = canEvolve ? "canEvolve" : "";
+        var transferStyle = elt.favorite ? "style='display:none'" : "";
         div.append(`
             <div class="pokemon">
                 <div class="transfer" id='${elt.id}'>
-                    <a title='Transfer' href="#" class="transferAction"><img src="./assets/img/recyclebin.png" /></a>
+                    <a title='Transfer' href="#" class="transferAction ${transferStyle}"><img src="./assets/img/recyclebin.png" /></a>
                     <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
                 <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong></span>

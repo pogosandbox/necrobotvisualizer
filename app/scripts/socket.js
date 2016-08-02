@@ -105,7 +105,8 @@ function listenToWebSocket() {
                     name: p.Item1.Nickname || inventory.getPokemonName(p.Item1.PokemonId),
                     realname: inventory.getPokemonName(p.Item1.PokemonId, "en"),
                     candy: p.Item3,
-                    candyToEvolve: pkmInfo ? pkmInfo.CandyToEvolve : 0
+                    candyToEvolve: pkmInfo ? pkmInfo.CandyToEvolve : 0,
+                    favorite: p.Item1.Favorite != 0
                 }
             });
             global.map.displayPokemonList(pkm);
