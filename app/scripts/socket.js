@@ -88,13 +88,13 @@ function listenToWebSocket() {
                     id: p.Item1.Id,
                     pokemonId: p.Item1.PokemonId,
                     inGym: p.Item1.DeployedFortId != "",
-                    canEvolve: pkmInfo && pkmInfo.EvolutionIds.length > 0, //&& pkmInfo.CandyToEvolve <= p.Item3,
+                    canEvolve: pkmInfo && pkmInfo.EvolutionIds.length > 0,
                     cp: p.Item1.Cp,
                     iv: p.Item2.toFixed(1),
                     name: p.Item1.Nickname || inventory.getPokemonName(p.Item1.PokemonId),
                     realname: inventory.getPokemonName(p.Item1.PokemonId, "en"),
                     candy: p.Item3,
-                    //candyToEvolve: pkmInfo.CandyToEvolve
+                    candyToEvolve: pkmInfo.CandyToEvolve
                 }
             });
             global.map.displayPokemonList(pkm);

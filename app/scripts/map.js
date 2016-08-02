@@ -152,7 +152,8 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     var div = $(".inventory .data");
     div.html(``);
     this.pokemonList.forEach(function(elt) {
-        var canEvolve = elt.canEvolve && !elt.inGym;
+        console.log(elt);
+        var canEvolve = elt.canEvolve && !elt.inGym && elt.candy >= elt.candyToEvolve;
         var evolveStyle = canEvolve ? "" : "style='display:none'";
         div.append(`
             <div class="pokemon">
@@ -161,9 +162,9 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
                     <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
                 <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong></span>
-                <span class="info">Candy: ${elt.candy}</span>
+                <span class="info">Candy: ${elt.candy}<span ${evolveStyle}>/${elt.candyToEvolve}</span></span>
                 <span class="imgspan"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
-                <span>${elt.name}</span>
+                <span class="name">${elt.name}</span>
             </div>
         `);
     });

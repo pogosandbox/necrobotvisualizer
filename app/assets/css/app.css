@@ -14,7 +14,7 @@
 body, html, .content {
     font-family: Roboto;
     font-weight: 400;
-    background: linear-gradient(to top, #24ccaa, #a2db95);
+    background-color: black;
     color: #eee;
     display: flex;
     flex-direction: column;
@@ -26,6 +26,7 @@ body, html, .content {
   padding: 0px;
   align-items: stretch;
   flex: 1 100%;
+  background: linear-gradient(to top, #24ccaa, #a2db95);
 }
 
 #map {
@@ -59,21 +60,9 @@ body, html, .content {
   border-right: 0px;
 }
 .toolbar div:hover {
-  background-color: #000;
+  background-color: #f4f4f4;
 }
-@keyframes bounce {
-  0%  { margin-top: 0px; }
-  15% { margin-top: -4px; }
-  30% { margin-top: 0px; }
-  40% { margin-top: -3px; }
-  50% { margin-top: 0px; }
-  60% { margin-top: -1px; }
-  70% { margin-top: 0px; }
-} 
-.toolbar div:hover img {
-  -webkit-filter: invert(100%);
-  animation: bounce 600ms 1;
-}
+
 .toolbar a {
   padding: 7px 12px 5px;
   display: inline-block;
@@ -211,6 +200,10 @@ body, html, .content {
   color: #fff;
 }
 
+.pokemonsort a:hover {
+  opacity: 0.5;
+}
+
 .pokemon .imgspan {
   flex-grow: 1; 
   display: flex;
@@ -222,8 +215,11 @@ body, html, .content {
   margin: auto;
 }
 
-.pokemon span:last-child {
+.pokemon .name {
   font-weight: bold;
+}
+
+.pokemon span:last-child {
   letter-spacing: 0.05em;
 }
 
