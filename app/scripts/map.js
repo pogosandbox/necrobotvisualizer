@@ -13,7 +13,7 @@ var Map = function(parentDiv) {
     this.layerPath = new L.LayerGroup();
 
     this.map = L.map(parentDiv, {
-        layers: [osm, this.layerPath, this.layerCatches, this.layerPokestops]
+        layers: [osm, this.layerPokestops, this.layerCatches, this.layerPath]
     });
 
    var baseLayers = {
@@ -61,12 +61,12 @@ Map.prototype.loadContext = function() {
             for (var i = 0; i < this.pokestop.length; i++) {
                 var pt = this.pokestop[i];
                 var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
-                L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(pt.name).addTo(this.layerPokestops);
+                L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 50}).bindPopup(pt.name).addTo(this.layerPokestops);
             }
             for (var i = 0; i < this.catches.length; i++) {
                 var pt = this.catches[i];
                 var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon"});
-                L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(`${pt.name} (lvl ${pt.lvl})`).addTo(this.layerCatches);
+                L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100}).bindPopup(`${pt.name} (lvl ${pt.lvl})`).addTo(this.layerCatches);
             }
         }
     } catch(err) {}
@@ -77,7 +77,7 @@ Map.prototype.initPath = function(force) {
 
     if (!this.me) {
         this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
-        this.me = L.marker([this.steps[0].lat, this.steps[0].lng]).addTo(this.map).bindPopup(`${this.steps[0].lat},${this.steps[0].lng}`);
+        this.me = L.marker([this.steps[0].lat, this.steps[0].lng], { zIndexOffset: 200 }).addTo(this.map).bindPopup(`${this.steps[0].lat},${this.steps[0].lng}`);
         $(".loading").hide();
     }
 
@@ -109,7 +109,7 @@ Map.prototype.addCatch = function(pt) {
     this.catches.push(pt);
 
     var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon" });
-    L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(pkm).addTo(this.layerCatches);
+    L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100 }).bindPopup(pkm).addTo(this.layerCatches);
 }
 
 Map.prototype.addVisitedPokestop = function(pt) {
@@ -125,7 +125,7 @@ Map.prototype.addVisitedPokestop = function(pt) {
         ps.marker.bindPopup(pt.name);
     } else {
         var icon = L.icon({ iconUrl: `./assets/img/pokestop.png`, iconSize: [30, 50]});
-        L.marker([pt.lat, pt.lng], {icon: icon}).bindPopup(pt.name).addTo(this.layerPokestops);
+        L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 50}).bindPopup(pt.name).addTo(this.layerPokestops);
     }
 }
 
@@ -135,7 +135,7 @@ Map.prototype.addPokestops = function(forts) {
         var ps = this.availablePokestops.find(ps => ps.id == pt.id);
         if (!ps) {
             var icon = L.icon({ iconUrl: `./assets/img/pokestop_available.png`, iconSize: [30, 50]});
-            pt.marker = L.marker([pt.lat, pt.lng], {icon: icon}).addTo(this.layerPokestops);
+            pt.marker = L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 50}).addTo(this.layerPokestops);
             this.availablePokestops.push(pt);
         }
     }
@@ -178,12 +178,14 @@ Map.prototype.displayEggsList = function(eggs) {
     var div = $(".inventory .data")
     div.html("");
     eggs.forEach(function(elt) {
-        div.append(`
-            <div class="eggs">
-                <span class="imgspan"><img src="./assets/inventory/${elt.type}.png" /></span>
-                <span>${elt.doneDist.toFixed(1)} / ${elt.totalDist.toFixed(1)} km</span>
-            </div>
-        `);
+        if (elt) {
+            div.append(`
+                <div class="eggs">
+                    <span class="imgspan"><img src="./assets/inventory/${elt.type}.png" /></span>
+                    <span>${elt.doneDist.toFixed(1)} / ${elt.totalDist.toFixed(1)} km</span>
+                </div>
+            `);
+        }
     });
     $(".inventory").show().addClass("active");
 }
@@ -191,7 +193,7 @@ Map.prototype.displayEggsList = function(eggs) {
 Map.prototype.displayInventory = function(items) {
     console.log("Inventory list");
     $(".inventory .sort").hide();
-    var count = itmes.filter(i => i.itemId != 901).length;
+    var count = items.filter(i => i.itemId != 901).length;
     $(".inventory .numberinfo").text(count + "/350");
     var div = $(".inventory .data")
     div.html(``);
