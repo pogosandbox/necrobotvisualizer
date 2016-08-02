@@ -33,7 +33,7 @@ form {
     font-weight: bold;
     font-size: 120%;
 }
-.config-form input[type=text], 
+.config-form input[type=text],
 .config-form input[type=date],
 .config-form input[type=datetime],
 .config-form input[type=number],
@@ -41,16 +41,16 @@ form {
 .config-form input[type=time],
 .config-form input[type=url],
 .config-form input[type=email],
-textarea, 
+textarea,
 select{
     box-sizing: border-box;
     border:1px solid #BEBEBE;
     padding: 7px;
     margin:0px;
     transition: all 0.30s ease-in-out;
-    outline: none;  
+    outline: none;
 }
-.config-form input[type=text]:focus, 
+.config-form input[type=text]:focus,
 .config-form input[type=date]:focus,
 .config-form input[type=datetime]:focus,
 .config-form input[type=number]:focus,
@@ -58,7 +58,7 @@ select{
 .config-form input[type=time]:focus,
 .config-form input[type=url]:focus,
 .config-form input[type=email]:focus,
-.config-form textarea:focus, 
+.config-form textarea:focus,
 .config-form select:focus{
     box-shadow: 0 0 8px #88D5E9;
     border: 1px solid #88D5E9;
@@ -69,7 +69,7 @@ select{
 
 .config-form .field-common {
     width: 70%;
-    font-size: 100%;    
+    font-size: 100%;
 }
 .config-form .field-long {
     width: 100%;
