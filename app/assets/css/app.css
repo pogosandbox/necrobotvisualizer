@@ -250,12 +250,9 @@ body, html, .content {
 
 .pokemon .imgspan.canEvolve:after {
   content: '';
-  -webkit-mask-image: url('../img/evolve.svg');
-  -webkit-mask-size: 55%;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: 50% 50%;
+  background: url('../img/evolve.gif') 50% 50% no-repeat;
+  background-size: 55%;
   position: absolute;
-  background-color: #24CCAA;
   width: 100%;
   height: 100%;
   z-index: -1;
