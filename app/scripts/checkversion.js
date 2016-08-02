@@ -1,6 +1,8 @@
 $(function() {
-    
+
     function cmpVersions (a, b) {
+        a = a.replace(/[a-z]/g, "");
+        b = b.replace(/[a-z]/g, "");
         var i, diff;
         var regExStrip0 = /(\.0+)+$/;
         var segmentsA = a.replace(regExStrip0, '').split('.');

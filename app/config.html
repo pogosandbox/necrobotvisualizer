@@ -29,7 +29,7 @@
             appconfig.followPlayer = $("#chkFollowPlayer").prop("checked") || false;
             appconfig.noPopup = $("#chkNoPopup").prop("checked") || false;
 
-            config.save(appconfig);
+            window.configService.save(appconfig);
             navigateAway();
         }
 

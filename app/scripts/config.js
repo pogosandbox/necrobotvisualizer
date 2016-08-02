@@ -44,15 +44,15 @@
             var json = localStorage.getItem("config");
             if (json) {
                 config = JSON.parse(json);
-                config = Object.assign({}, defaultConfig, config);$
-                config.version = "v0.0.0";
                 console.log("load ok using storage");
-                console.log(config);
             }
+            config = Object.assign({}, defaultConfig, config);$
+            config.version = "v9.0.0";
             return config;
         }
 
         service.save = function(config) {
+            console.log(config);
             localStorage.setItem("config", JSON.stringify(config));
         }
 

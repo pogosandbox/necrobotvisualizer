@@ -30,5 +30,5 @@
         return allItems[id];
     }
 
-    global.inventoryService = service;
+    window.inventoryService = service;
 }());

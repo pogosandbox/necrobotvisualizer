@@ -16,6 +16,8 @@
         $("#pokemonLink").click( function() {
             if ($(".inventory").css("opacity") == "1" && $(".inventory .data .pokemon").length) {
                 $(".inventory").removeClass("active");
+                $(".pokemonsort .sort a").removeClass("active");
+                $("#sortByCp").addClass("active");
             } else {
                 wssend("PokemonList");
             }
