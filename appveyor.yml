@@ -20,6 +20,7 @@ install:
   - npm -g install npm
   - IF %nodejs_version% NEQ 0.8 set PATH=%APPDATA%\npm;%PATH%
   # Typical npm stuff.
+  - npm install -g electron-prebuilt
   - npm install
   - npm run rebuild-tests
 
