@@ -12,6 +12,15 @@
         global.ws.send(data); 
     };
 
+    function confirmAndSendToServer(msg, callback) {
+        vex.dialog.confirm({
+            message: msg,
+            callback: function(value) {
+                if(value) callback();
+            }
+        });
+    }
+
     $(function() {
         var sortBy = localStorage.getItem("sortPokemonBy") || "cp";
         $("#sortBy" + sortBy).addClass("active").siblings().removeClass("active");
@@ -69,22 +78,26 @@
 
         $(".inventory .data").on("click", "a.transferAction", function() {
             var transfer = $(this).parent();
-            wssend({
-                Command: "TransferPokemon",
-                PokemonId: transfer.attr("id"),
-                Data: transfer.attr("id")
+            confirmAndSendToServer("Are you sure you want to transfer this Pokemon?", () => {
+                wssend({
+                    Command: "TransferPokemon",
+                    PokemonId: transfer.attr("id"),
+                    Data: transfer.attr("id")
+                });
+                transfer.parent().fadeOut();
             });
-            transfer.parent().fadeOut();
         });
 
         $(".inventory .data").on("click", "a.evolveAction", function() {
             var evolve = $(this).parent();
-            wssend({
-                Command: "EvolvePokemon",
-                PokemonId: evolve.attr("id"),
-                Data: evolve.attr("id")
+            confirmAndSendToServer("Are you sure you want to evolve this Pokemon?", () => {
+                wssend({
+                    Command: "EvolvePokemon",
+                    PokemonId: evolve.attr("id"),
+                    Data: evolve.attr("id")
+                });
+                $(".inventory").removeClass("active");
             });
-            $(".inventory").removeClass("active");
         });
 
         if (global.config.websocket) {

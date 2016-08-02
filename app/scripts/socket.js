@@ -115,7 +115,6 @@ function listenToWebSocket() {
                     }
                 }
             });
-            console.log(msg.UnusedEggs.$values);
             var eggs = Array.from(msg.UnusedEggs.$values, i => {
                 return {
                     type: "egg",
@@ -156,6 +155,8 @@ function listenToWebSocket() {
         } else if (command.indexOf("EvolveCountEvent") >= 0) {
             // nothing
         } else if (command.indexOf("DebugEvent") >= 0) {
+            // nothing
+        } else if (command.indexOf("SnipeEvent") >= 0) {
             // nothing
         } else if (command.indexOf("EggIncubatorStatusEvent") >= 0) {
             // nothing
