@@ -4,14 +4,22 @@
   font-weight: 400;
   src: local('Roboto'), local('Roboto'), url(../fonts/Roboto-Regular.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'Roboto';
+  font-style: bold;
+  font-weight: 500;
+  src: local('Roboto'), local('Roboto'), url(../fonts/Roboto-Medium.ttf) format('truetype');
+}
 
 body, html, .content {
     font-family: Roboto;
-    background-color: black;
+    font-weight: 400;
+    background: linear-gradient(to top, #24ccaa, #a2db95);
     color: #eee;
     display: flex;
     flex-direction: column;
     height: 100%;
+    -webkit-font-smoothing: antialiased;
 }
 
 .content {
@@ -41,56 +49,74 @@ body, html, .content {
   display: flex;
   flex-direction: row;
   z-index: 1000;
+  overflow: hidden;
 }
 .toolbar div {
-  padding: 7px;
   border-right: 1px solid #ccc;
 }
-.toolbar div:hover {
-  background-color: #f4f4f4;
+.toolbar div:last-child {
+  border-right: 0px;
 }
-
+.toolbar div:hover {
+  background-color: #000;
+}
+@keyframes bounce {
+  0%  { margin-top: 0px; }
+  15% { margin-top: -4px; }
+  30% { margin-top: 0px; }
+  40% { margin-top: -3px; }
+  50% { margin-top: 0px; }
+  60% { margin-top: -1px; }
+  70% { margin-top: 0px; }
+} 
+.toolbar div:hover img {
+  -webkit-filter: invert(100%);
+  animation: bounce 600ms 1;
+}
 .toolbar a {
-  padding: 0px 5px;
+  padding: 7px 12px 5px;
+  display: inline-block;
 }
 
 .loading {
-  background-color: black;
-  color: #eee;
-  width: 300px;
+  background-color: rgba(255,255,255,0.2);
+  color: #fff;
+  max-width: 350px;
   height: 50px;
-  margin-left: -170px;
-  margin-top: -70px;
-  position: absolute;
+  line-height: 50px;
   padding: 40px;
-  left: 50%;
-  top: 50%;
-  vertical-align: middle;
   text-align: center;
   border-radius: 10px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .message {
-  background-color: #eee;
-  color: black;
-  width: 300px;
+  background-color: rgba(255,255,255,0.9);
+  color: #436a6b;
+  max-width: 350px;
   height: 50px;
-  margin-left: -170px;
-  margin-top: -70px;
-  position: absolute;
+  line-height: 50px;
   padding: 40px;
-  left: 50%;
-  top: 50%;
-  vertical-align: middle;
   text-align: center;
   border-radius: 10px;
-  border: 2 solid black;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 2000;
+
 }
 
 .inventory {
-  background-color: #DDDDDD;
-  color: black;
+  background-color: rgba(255,255,255,0.95);
+  color: #436a6b;
   width: 500px;
   height: 70%;;
   position: absolute;
@@ -99,7 +125,7 @@ body, html, .content {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  border: 1px solid black;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.7);
   border-radius: 10px;
   z-index: 1000;
   display: flex;
@@ -146,7 +172,7 @@ body, html, .content {
 .pokemon {
   position: relative;
   width: 120px;
-  height: 120px;
+  height: 130px;
   padding: 5px;
   margin: 10px;
   display: flex;
@@ -157,10 +183,31 @@ body, html, .content {
 .inventory .info {
   font-size: 80%;
 }
+.inventory .info ~ .info {
+  font-size: 70%;
+}
 
 .inventory .numberinfo {
-  margin: 15px;
+  margin: 12px 200px;
   font-size: 100%;
+  display: inline-block;
+  border: 1px solid #436a6b;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.pokemonsort a {
+  text-decoration: none;
+  color: #436a6b;
+  display: inline-block;
+  padding: 4px 7px;
+  border-radius: 3px;
+}
+.pokemonsort a:hover,
+.pokemonsort a:active,
+.pokemonsort a.active {
+  background-color: #436a6b;
+  color: #fff;
 }
 
 .pokemon .imgspan {
@@ -172,6 +219,11 @@ body, html, .content {
   max-width: 75px;
   max-height: 75px;
   margin: auto;
+}
+
+.pokemon span:last-child {
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
 
 .pokemon:hover img {
@@ -199,6 +251,7 @@ body, html, .content {
 
 .close {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
+  line-height: normal;
 }
