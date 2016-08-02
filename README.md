@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Epinikion/necrobotvisualizer.svg?branch=master)](https://travis-ci.org/Epinikion/necrobotvisualizer)
+
 # Necrobot / MobBot Visualizer
 
 You have to be up to date on the bot side (master or maybe latest release).  
