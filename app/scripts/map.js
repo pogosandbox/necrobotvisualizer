@@ -103,7 +103,7 @@ Map.prototype.addToPath = function(pt) {
 }
 
 Map.prototype.addCatch = function(pt) {
-    var pkm = `${pt.name} (lvl ${pt.lvl})`;
+    var pkm = `${pt.name} (lvl ${pt.lvl}) <br /> Cp:${pt.cp} Iv:${pt.iv}%`;
     console.log("Catch " + pkm);
 
     this.catches.push(pt);
@@ -193,7 +193,7 @@ Map.prototype.displayEggsList = function(eggs) {
 Map.prototype.displayInventory = function(items) {
     console.log("Inventory list");
     $(".inventory .sort").hide();
-    var count = items.filter(i => i.itemId != 901).length;
+    var count = items.filter(i => i.itemId != 901).reduce((prev, cur) => prev + cur.count, 0);
     $(".inventory .numberinfo").text(count + "/350");
     var div = $(".inventory .data")
     div.html(``);
