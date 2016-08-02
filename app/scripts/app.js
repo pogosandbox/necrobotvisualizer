@@ -1,13 +1,11 @@
 (function() {
     var global = { snipping: false };
     window.global = global;
+ 
+    global.config = window.configService.load();
+    global.version = global.config.version;
 
-    const { version } = require("./package.json");
-    document.title += " - " + version;
-    global.version = version;
-
-    var config = require("./scripts/config");
-    global.config = config.load();
+    document.title += " - " + global.version;
 
     var wssend = function(obj) { 
         var data = typeof(obj) != "object" ? obj : JSON.stringify(obj);
@@ -90,7 +88,7 @@
             // settings ok, let's go
             global.map = new Map("map");
             global.map.loadContext();
-            listenToWebSocket();
+            startListenToSocket();
         } else {
             // no settings, first time run?
             window.location = "config.html";

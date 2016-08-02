@@ -4,19 +4,31 @@
 
     function load(locale) {
         locale = locale || "en";
-        allPokemon = require(`../assets/json/pokemon.${locale}.js`);
-        allItems = require(`../assets/json/inventory.${locale}.js`);
+        $.ajax({
+            url: `assets/json/pokemon.${locale}.json`,
+            async: false,
+            success: (result) => { allPokemon = JSON.parse(result); }
+        });
+        $.ajax({
+            url: `assets/json/inventory.${locale}.json`,
+            async: false,
+            success: (result) => { allItems = JSON.parse(result); }
+        });
     }
 
-    module.exports.init = function(locale) {
+    var service = {};
+
+    service.init = function(locale) {
         if (allItems == null) load(locale);
     }
 
-    module.exports.getPokemonName = function(id) {
+    service.getPokemonName = function(id) {
         return allPokemon[id];
     }
 
-    module.exports.getItemName = function(id) {
+    service.getItemName = function(id) {
         return allItems[id];
     }
+
+    global.inventoryService = service;
 }());

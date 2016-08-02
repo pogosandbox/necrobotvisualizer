@@ -1,8 +1,11 @@
-var inventory = require("./scripts/inventory");
+var inventory = window.inventoryService;
+
+function startListenToSocket() {
+    inventory.init(global.config.locale);
+    listenToWebSocket();
+}
 
 function listenToWebSocket() {
-    inventory.init(global.config.locale);
-
     var pkmSettings = localStorage.getItem("pokemonSettings");
     if (pkmSettings) {
         global.pokemonSettings = JSON.parse(pkmSettings);
@@ -51,6 +54,8 @@ function listenToWebSocket() {
                 var pkm = {
                     id: msg.Id,
                     name: inventory.getPokemonName(msg.Id),
+                    cp: msg.Cp,
+                    iv: msg.Perfection,
                     lvl: msg.Level,
                     lat: msg.Latitude,
                     lng: msg.Longitude
@@ -108,6 +113,7 @@ function listenToWebSocket() {
                     }
                 }
             });
+            console.log(msg.UnusedEggs.$values);
             var eggs = Array.from(msg.UnusedEggs.$values, i => {
                 return {
                     type: "egg",

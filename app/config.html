@@ -13,9 +13,10 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>if (window.module) module = window.module;</script>
 
+    <script src="scripts/config.js"></script>
+
     <script>
-        const config = require("./scripts/config");
-        var appconfig = config.load();
+        var appconfig =  window.configService.load();
 
         function saveConfig() {
             if (appconfig.websocket != $("#txtWebSocket").val()) {
