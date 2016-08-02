@@ -1,6 +1,6 @@
 
 var Map = function(parentDiv) {
-    
+
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 
     var osmCycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png');
@@ -97,7 +97,7 @@ Map.prototype.addToPath = function(pt) {
         this.path.addLatLng(latLng);
         this.me.setLatLng(latLng).getPopup().setContent(`${pt.lat},${pt.lng}`);
         if (global.config.followPlayer) {
-            this.map.panTo(latLng);
+            this.map.panTo(latLng, true);
         }
     }
 }
