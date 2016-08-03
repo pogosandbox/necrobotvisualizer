@@ -1,3 +1,5 @@
+## Beta: Online version at https://nicoschmitt.github.io/pogo.webui/
+
 # Necrobot / MobBot Visualizer
 
 You have to be up to date on the bot side (master or maybe latest release).  
