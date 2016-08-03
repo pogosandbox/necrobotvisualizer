@@ -56,7 +56,7 @@ Map.prototype.loadContext = function() {
             this.catches = JSON.parse(sessionStorage.getItem("catches")) || [];
             this.pokestops = JSON.parse(sessionStorage.getItem("pokestops")) || [];
 
-            this.initPath();
+            if (this.steps.length > 0) this.initPath();
 
             for (var i = 0; i < this.pokestops.length; i++) {
                 var pt = this.pokestops[i];

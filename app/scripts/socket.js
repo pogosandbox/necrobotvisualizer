@@ -2,6 +2,7 @@ var inventory = window.inventoryService;
 
 function startListenToSocket() {
     inventory.init(global.config.locale);
+    console.log("Connecting to " + global.config.websocket);
     listenToWebSocket();
 }
 

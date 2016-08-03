@@ -1,5 +1,18 @@
 (function() {
 
+    function getURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
     var defaultConfig = {
         locale: "en",
         websocket: "wss://localhost:14251",
@@ -37,17 +50,22 @@
         }
 
     } else {
-        console.log("Load config from storage + server");
+        console.log("Load config from storage");
+        defaultConfig.websocket = "ws://localhost:14252";
 
         service.load = function() {
             var config = Object.assign({}, defaultConfig);
             var json = localStorage.getItem("config");
             if (json) Object.assign(config, JSON.parse(json));
-            $.ajax({
-                url: `/api/config`,
-                async: false,
-                success: (result) => { Object.assign(config, result); }
-            });
+
+            var host = getURLParameter("websocket");
+            if (host) {
+                console.log(host);
+                config.websocket = host;
+            }
+
+            config.version = "online";
+
             return config;
         }
 
