@@ -66,7 +66,7 @@ Map.prototype.loadContext = function() {
 
             for (var i = 0; i < this.catches.length; i++) {
                 var pt = this.catches[i];
-                var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon", iconAnchor: [20, 20]});
+                var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [50, 50], iconAnchor: [25, 25]});
                 var pkm = `${pt.name} (lvl ${pt.lvl}) <br /> Cp:${pt.cp} Iv:${pt.iv}%`;
                 L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100}).bindPopup(pkm).addTo(this.layerCatches);
             }
@@ -109,7 +109,7 @@ Map.prototype.addCatch = function(pt) {
 
     this.catches.push(pt);
 
-    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon", iconAnchor: [25, 25] });
+    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [50, 50], iconAnchor: [25, 25] });
     L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100 }).bindPopup(pkm).addTo(this.layerCatches);
 }
 

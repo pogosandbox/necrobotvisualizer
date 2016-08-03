@@ -37,11 +37,6 @@ body, html, .content {
   background-color: transparent;
 }
 
-.pkmIcon {
-  max-height: 45px;
-  max-width: 60px;
-}
-
 .toolbar {
   background-color: #fff;
   box-shadow: 0px 0px 5px rgba(0,0,0,0.7);
