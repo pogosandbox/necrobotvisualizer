@@ -2,13 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch",
+            "name": "Mockup Server",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/debug.js",
+            "program": "${workspaceRoot}/mockupserver/server.js",
             "stopOnEntry": false,
             "args": [],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/mockupserver",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [
