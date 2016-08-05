@@ -5,10 +5,10 @@
             "name": "Mockup Server",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/mockupserver/server.js",
+            "program": "${workspaceRoot}/debug.js",
             "stopOnEntry": false,
             "args": [],
-            "cwd": "${workspaceRoot}/mockupserver",
+            "cwd": "${workspaceRoot}",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [
