@@ -1,4 +1,3 @@
-## Beta: Online version at https://github.com/nicoschmitt/pogo.webui/wiki
 
 # Necrobot / MobBot Visualizer
 
