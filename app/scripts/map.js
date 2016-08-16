@@ -166,7 +166,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
         div.append(`
             <div class="pokemon">
                 <div class="transfer" id='${elt.id}'>
-                    <a title='Transfer' href="#" class="transferAction ${transferStyle}"><img src="./assets/img/recyclebin.png" /></a>
+                    <a title='Transfer' href="#" class="transferAction" ${transferStyle}><img src="./assets/img/recyclebin.png" /></a>
                     <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
                 <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong></span>
