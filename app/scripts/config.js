@@ -17,7 +17,15 @@
         locale: "en",
         websocket: "wss://localhost:14251",
         followPlayer: false,
-        noPopup: false
+        noPopup: false,
+        noConfirm: false,
+        memory: {
+            limit: false,
+            maxCaught: 50,
+            mathPath: 10000,
+            maxPokestops: 250
+        },
+        version: "online"
     };
 
     var service = {};
@@ -38,14 +46,16 @@
         }
 
         service.load = function() {
-            var config = defaultConfig;
+            var config =  Object.assign({}, defaultConfig);
             try {
                 config = JSON.parse(fs.readFileSync(configfile, 'utf-8')); 
                 config = Object.assign({}, defaultConfig, config);
                 config.version = version;
             } catch(err) {
                 configService.save(defaultConfig);
+                config =  Object.assign({}, defaultConfig);
             }
+
             return config;
         }
 
@@ -59,21 +69,17 @@
             if (json) Object.assign(config, JSON.parse(json));
 
             var host = getURLParameter("websocket");
-            if (host) {
-                console.log(host);
-                config.websocket = host;
-            }
+            if (host) config.websocket = host;
 
-            config.version = "online";
+            // no ui, so force memory settings
+            config.memory = defaultConfig.memory;
 
             return config;
         }
 
         service.save = function(config) {
-            console.log(config);
             localStorage.setItem("config", JSON.stringify(config));
         }
-
     }
 
     window.configService = service;

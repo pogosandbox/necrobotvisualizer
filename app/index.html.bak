@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Pokemon Bot Visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vex-js/2.3.4/css/vex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vex-js/2.3.4/css/vex-theme-default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0-rc.1.0/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0-rc.1.0/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0-rc.1.0/leaflet.markercluster.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vex-js/2.3.4/js/vex.combined.min.js"></script>
+    <script>vex.defaultOptions.className = 'vex-theme-default';</script>
+    <!--<script src="lib/lib.full.min.js"></script>-->
+    <script>if (window.module) module = window.module;</script>
+
+    <script src="scripts/config.js"></script>
+    <script src="scripts/inventory.js"></script>
+    <script src="scripts/map.js"></script>
+    <script src="scripts/socket.js"></script>
+    <script src="scripts/app.js"></script>
+    <script async src="scripts/checkversion.js"></script>
+    <script src="scripts/analytics.js"></script>
+  </head>
+  
+  <body>
+    <div class="content">
+      <div id="map"></div>
+    </div>
+    <div class="toolbar">
+      <div style="display:none" title="Show Pokemon"><a href="#" id="pokemonLink"><img width="20" src="./assets/img/pokeball.png" /></a></div>
+      <div style="display:none" title="Show Eggs"><a href="#" id="eggsLink"><img width="20" src="./assets/img/eggs.png" /></a></div>
+      <div style="display:none" title="Show Inventory"><a href="#" id="inventoryLink"><img width="20" src="./assets/img/inventory.png" /></a></div>
+      <div style="display:none" title="Clear map"><a href="#" id="recycleLink"><img width="20" src="./assets/img/recyclebin.png" /></a></div>
+      <div title="Open Settings"><a href="#" id="settingsLink"><img width="20" src="./assets/img/settings.png" /></a></div>
+    </div>
+    <div class="loading">Connecting to the bot...</div>
+    <div class="message" style="display:none">
+      <div class="close"><a href="#"><img src="./assets/img/close.png" /></a></div>
+      <div class="data"></div>
+    </div>
+    <div class="inventory" style="display:none">
+      <div class="refresh"><a href="#"><img src="./assets/img/refresh.png" /></a></div>
+      <div class="close"><a href="#"><img src="./assets/img/close.png" /></a></div>
+      <div class="pokemonsort sort" style="display:none">
+          <a href="#" id="sortBycp" class="active">Sort by CP</a>
+          <a href="#" id="sortByiv">Sort by IV</a>
+          <a href="#" id="sortBypokemonId">Sort by #</a>
+      </div>
+      <div class="numberinfo"></div>
+      <div class="data"></div>
+    </div>
+    <div class="player" style="display:none">
+      <img src="assets/img/player.png" class="back" />
+      <div class="level">Lvl <span class="value">1</span></div>
+      <div class="playername"><span class="value"></span></div>
+      <div class="myprogress">
+        <span class="value" style="width: 0%"></span>
+      </div>
+    </div>
+  </body>
+</html>
