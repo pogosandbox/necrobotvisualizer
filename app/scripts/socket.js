@@ -33,6 +33,7 @@ function listenToWebSocket() {
     ws.onmessage = function (evt) {
         var msg = JSON.parse(evt.data);
         var command = msg.Command || msg.$type;
+        $(".toolbar div").show();
         if (command.indexOf("PokemonSettings") >= 0) {
             var settings = msg.Data.$values;
             global.pokemonSettings = Array.from(msg.Data.$values, elt => {
