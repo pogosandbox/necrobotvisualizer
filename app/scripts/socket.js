@@ -108,7 +108,8 @@ function listenToWebSocket() {
                     realname: inventory.getPokemonName(p.Item1.PokemonId, "en"),
                     candy: p.Item3,
                     candyToEvolve: pkmInfo ? pkmInfo.CandyToEvolve : 0,
-                    favorite: p.Item1.Favorite != 0
+                    favorite: p.Item1.Favorite != 0,
+                    lvl: inventory.getPokemonLevel(p.Item1),
                 }
             });
             global.map.displayPokemonList(pkm);
@@ -168,7 +169,9 @@ function listenToWebSocket() {
             // nothing
         } else if (command.indexOf("EggIncubatorStatusEvent") >= 0) {
             // nothing
-        } else if (command.indexOf("iconAnchor") >= 0) {
+        } else if (command.indexOf("HumanWalkingEvent") >= 0) {
+            // nothing
+        } else if (command.indexOf("UnaccurateLocation") >= 0) {
             // nothing
         } else if (command.indexOf("ErrorEvent") >= 0) {
             console.log(msg.Message);

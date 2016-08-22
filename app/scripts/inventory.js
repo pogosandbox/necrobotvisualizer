@@ -40,7 +40,7 @@
                     749:33, 752:33.5, 755:34, 758:34.5, 761:35, 764:35.5, 767:36, 770:36.5, 773:37,
                     776: 37.5, 778:38, 781:38.5, 784:39, 790:40};
     service.getPokemonLevel = function(pokemon) {
-        var p = (pokemon.combat_power_multiplier + pokemon.additional_cp_multiplier)*1000;
+        var p = (pokemon.CpMultiplier + pokemon.AdditionalCpMultiplier)*1000;
         return lvlMap[p|0];
     }
 

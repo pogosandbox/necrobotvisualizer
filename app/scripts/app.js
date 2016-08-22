@@ -67,7 +67,7 @@
 
         $(".inventory .refresh").click(function() {
             console.log("Refresh");
-            wssend(global.active + "List");
+            wssend(global.active[0].toUpperCase() + global.active.substring(1) + "List");
         });
 
         $(".inventory .close").click(function() {
@@ -103,8 +103,8 @@
                 ga("send", "event", "transfer", name);
                 wssend({
                     Command: "TransferPokemon",
-                    PokemonId: transfer.attr("id"),
-                    Data: transfer.attr("id")
+                    PokemonId: id,
+                    Data: id
                 });
                 global.map.pokemonList.splice(idx, 1);
                 parent.parent().fadeOut();
@@ -123,8 +123,8 @@
                 ga("send", "event", "evolve", name);
                 wssend({
                     Command: "EvolvePokemon",
-                    PokemonId: evolve.attr("id"),
-                    Data: evolve.attr("id")
+                    PokemonId: id,
+                    Data: id
                 });
                 global.map.pokemonList.splice(idx, 1);
                 parent.parent().fadeOut();
@@ -143,7 +143,7 @@
             parent.find(".transferAction").toggleClass("hide");
             wssend({
                 Command: "FavoritePokemon",
-                PokemonId: evolve.attr("id"),
+                PokemonId: id,
                 Favorite: selected.favorite
             });
         });
