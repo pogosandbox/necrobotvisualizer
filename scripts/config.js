@@ -38,11 +38,13 @@
         var { remote } = require("electron");
 
         var configfile = path.join(remote.app.getPath("userData"), "settings.json");
-
         $.ajax({
             url: `package.json`,
             async: false,
-            success: (result) => { version = "v" + JSON.parse(result).version; }
+            success: (result) => {
+                result = (typeof result == "string" ? JSON.parse(result) : result);  
+                version = "v" + result.version; 
+            }
         });
 
         service.save = function(config) {
