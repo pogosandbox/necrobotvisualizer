@@ -39,8 +39,11 @@
 
         var configfile = path.join(remote.app.getPath("userData"), "settings.json");
 
-console.log("dir: " + __dirname);
-        const { version } = require("./package.json");
+        $.ajax({
+            url: `package.json`,
+            async: false,
+            success: (result) => { version = "v" + JSON.parse(result).version; }
+        });
 
         service.save = function(config) {
             fs.writeFileSync(configfile, JSON.stringify(config));
