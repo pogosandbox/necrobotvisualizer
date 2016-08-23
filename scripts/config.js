@@ -47,7 +47,6 @@
                 version = "v" + result.version; 
             }
         });
-        version = "v1.0.7";
 
         service.save = function(config) {
             fs.writeFileSync(configfile, JSON.stringify(config));
