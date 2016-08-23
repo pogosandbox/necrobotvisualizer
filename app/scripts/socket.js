@@ -131,7 +131,8 @@ function listenToWebSocket() {
                     doneDist: i.EggKmWalkedStart
                 }
             });
-            global.map.displayEggsList(incubators.concat(eggs));
+            eggs = incubators.concat(eggs).filter(e => e);
+            global.map.displayEggsList(eggs);
         } else if (command.indexOf("InventoryListEvent") >= 0) {
             console.log(msg);
             var items = Array.from(msg.Items.$values, item => {
@@ -149,6 +150,10 @@ function listenToWebSocket() {
                 name: inventory.getPokemonName(msg.Id)
             };
             pokemonToast(pkm, { title: "A Pokemon Evolved" });
+        } else if (command.indexOf("PathEvent") >= 0) {
+            var json = "[" + msg.StringifiedPath + "]";
+            json = json.replace(/lat/g, '"lat"').replace(/lng/g, '"lng"');
+            global.map.setRoute(JSON.parse(json));
         } else if (command.indexOf("TransferPokemonEvent") >= 0) {
             // nothing
         } else if (command.indexOf("FortTargetEvent") >= 0) {

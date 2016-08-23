@@ -4,33 +4,35 @@ var uglify   = require("gulp-uglify");
 var rename   = require("gulp-rename");
 var concat   = require("gulp-concat");
 var cssnano  = require("gulp-cssnano");
+var sass     = require('gulp-sass');
 
-// Dev
+// Watch
 
-gulp.task("clean", function() {
-   del("app/app/lib/*"); 
+gulp.task('dev-styles', function() {
+    return gulp.src('src/assets/css/*.scss')
+                .pipe(sass.sync().on('error', sass.logError))
+                .pipe(gulp.dest(function(f) {
+                    return f.base;
+                }));
 });
 
-gulp.task('lib-js', function() {
-    return gulp.src([
-                    
-                ])
-                .pipe(concat("lib.full.min.js"))
-                .pipe(uglify())
-                .pipe(gulp.dest("app/lib"));
+gulp.task('watch-styles', function() {
+   return gulp.watch('src/assets/css/*.scss', ['dev-styles']);
 });
 
+gulp.task('watch', [ 'dev-styles', 'watch-styles' ]);
 
-gulp.task('lib-css', function() {
-    return gulp.src([
-                   
-                ])
-                .pipe(concat("lib.full.min.css"))
-                .pipe(cssnano())
-                .pipe(gulp.dest("app/lib"));
+// Deploy
+
+gulp.task('deploy', ['build'], function() {
+  return gulp.src([
+      './app/**/*',
+      '!./app/node_modules'
+    ])
+    .pipe(file('CNAME', "necrovisualizer.nicontoso.eu"))
+    .pipe(ghPages({remoteUrl: "https://github.com/nicoschmitt/necrovisualizer"}));
 });
-
 
 // Main tasks
 
-gulp.task('default', [ "clean", "lib-js", "lib-css" ]);
+gulp.task('default', [ 'dev-styles' ]);

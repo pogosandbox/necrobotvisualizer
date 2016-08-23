@@ -1,0 +1,26 @@
+// Toastr
+
+#toast-container {
+    top: 10px;
+    right: 10px;
+    @media #{$medium-and-down} { top: 10px; right: 10px; left: auto; bottom: auto; }
+    @media #{$small-and-down} { top: 0px; right: 0px; left: auto; bottom: auto; }
+
+    .toast {
+        display: block;
+    }
+}
+
+// Leaflet
+
+.leaflet-container {
+    box-sizing: content-box;
+
+    [type="checkbox"]:not(:checked), [type="checkbox"]:checked, [type="radio"]:not(:checked), [type="radio"]:checked {
+        left: auto;
+        opacity: 1;
+        position: relative;
+    }
+
+    label { color: $black }
+}

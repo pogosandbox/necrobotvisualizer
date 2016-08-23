@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <title>Pokemon Bot Visualizer - Config</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/config.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
     <script>if (window.module) module = window.module;</script>
 
     <script src="scripts/config.js"></script>
@@ -24,17 +27,18 @@
                 sessionStorage.setItem("available", false)
             } 
 
-            appconfig.locale = $("#slLocale").val();
+            appconfig.locale = $("#slLocale").val() || "en";
             appconfig.websocket = $("#txtWebSocket").val();
             appconfig.followPlayer = $("#chkFollowPlayer").prop("checked") || false;
             appconfig.noPopup = $("#chkNoPopup").prop("checked") || false;
+            appconfig.noConfirm = $("#chkNoConfirm").prop("checked") || false;
 
             window.configService.save(appconfig);
             navigateAway();
         }
 
         function navigateAway() {
-            window.location = "index.html";
+            history.go(-1);
         }
 
         $(function() {
@@ -42,43 +46,68 @@
             $("#txtWebSocket").val(appconfig.websocket);
             $("#chkFollowPlayer").prop('checked', appconfig.followPlayer || false);
             $("#chkNoPopup").prop('checked', appconfig.noPopup || false);
+            $("#chkNoConfirm").prop('checked', appconfig.noConfirm || false);
 
             $("#saveBtn").click(saveConfig);
             $("#cancelBtn").click(navigateAway);
+
+            $('select').material_select();
         });
     </script>    
   </head>
   
   <body>
-    <div class="content">
-        <h2>Visualizer Config</h2>
-        <form>
-            <ul class="config-form">
-                <li>
-                    <label>Locale</label>
-                    <select id="slLocale" name="locale" class="field-common">
-                        <option value="en">English</option>
-                        <option value="fr">Francais</option>
-                        <option value="de">German</option>
-                        <option value="cn">Chineese</option>
-                        <option value="tw">Taiwan</option>
-                    </select>
-                </li>
-                <li>
-                    <label>Map options</label>
-                    <div><input type="checkbox" id="chkFollowPlayer" class="field-comon" /><span>Follow player on map</span></div>
-                    <div><input type="checkbox" id="chkNoPopup" class="field-comon" /><span>Disable popups</span></div>
-                </li>
-                <li>
-                    <label>Bot Websocket</label>
-                    <input type="text" id="txtWebSocket" class="field-common" placeholder="wss://localhost:[port]" />
-                </li>
-                <li>
-                    <input id="saveBtn" type="button" value="Save" />
-                    <input id="cancelBtn" type="button" value="Cancel" />
-                </li>
-            </ul>
-        </form>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m10 offset-m1 l8 offset-l2">
+                <h3 class="center-align">Visualizer Config</h3>
+                <form>
+                    <div class="col s12">
+                        <h5>Display</h5>
+                    </div>
+                    <div class="input-field col s12">
+                        <select id="slLocale" name="locale">
+                            <option value="" disabled selected>Choose your language</option>
+                            <option value="en">English</option>
+                            <option value="fr">Francais</option>
+                            <option value="de">German</option>
+                            <option value="cn">Chinese</option>
+                            <option value="tw">Taiwan</option>
+                            <option value="th">Thai</option>
+                        </select>
+                        <label for="slLocale">Locale</label>
+                    </div>
+                    <div class="col s12">
+                        <h5>Options</h5>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="checkbox" id="chkFollowPlayer" class="field-comon" />
+                                <label for="chkFollowPlayer">Follow player on map</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="checkbox" id="chkNoPopup" class="field-comon" />
+                                <label for="chkNoPopup">Disable popups</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input type="checkbox" id="chkNoConfirm" class="field-comon" />
+                                <label for="chkNoConfirm">Don't show confirm dialog when transfer/evolve</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h5>Bot</h5>
+                    </div>
+                    <div class="input-field col s12">
+                        <label>Bot Websocket</label>
+                        <input type="text" id="txtWebSocket" class="field-common" placeholder="http://localhost:8000" />
+                    </div>
+                    <div class="input-field col s12">
+                        <a id="saveBtn"   class="waves-effect waves-light btn">Save</a>
+                        <a id="cancelBtn" class="waves-effect waves-light btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
   </body>
 
