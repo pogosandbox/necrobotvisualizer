@@ -17,9 +17,10 @@ function createWindow () {
   mainWindow = new BrowserWindow({width: 1200, height: 900})
 
   if (process.argv.indexOf("--local") >= 0) {
+    console.log("Using local version.");
     mainWindow.loadURL(`file://${__dirname}/index.html`);
   } else {
-    mainWindow.loadURL(`http://necrobotvisualizer.nicontoso.eu`);
+    mainWindow.loadURL(`http://necrovisualizer.nicontoso.eu`);
   }
 
   mainWindow.on('closed', function () {

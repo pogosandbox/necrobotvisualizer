@@ -84,6 +84,7 @@ body, html, .content {
 }
 
 .message {
+    box-sizing: content-box;
     background-color: rgba(255,255,255,0.9);
     color: #436a6b;
     max-width: 350px;
@@ -102,6 +103,10 @@ body, html, .content {
 
     .data {
         line-height: 100%;
+    }
+
+    .close {
+        top: 10px;
     }
 }
 
