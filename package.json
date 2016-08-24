@@ -1,6 +1,6 @@
 {
   "name": "necrobotvisualizer",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Pokemon Bot Visualizer",
   "author": "Nicolas Schmitt",
   "main": "main.js",
